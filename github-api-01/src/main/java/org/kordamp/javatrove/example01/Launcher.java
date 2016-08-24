@@ -33,7 +33,6 @@ import java.util.concurrent.ExecutorService;
  */
 public class Launcher extends Application {
     @Inject private ExecutorService executorService;
-    @Inject private ApplicationEventHandler eventHandler;
     @Inject private AppView view;
 
     @Override

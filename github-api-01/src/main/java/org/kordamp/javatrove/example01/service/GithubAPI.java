@@ -31,6 +31,6 @@ import java.util.List;
 public interface GithubAPI {
     String GITHUB_API_URL_KEY = "GITHUB_API_URL";
 
-    @GET("/orgs/{name}/repos")
-    Call<List<Repository>> repositories(@Path("name") String name);
+    @GET("/orgs/{organization}/repos")
+    Call<List<Repository>> repositories(@Path("organization") String organization);
 }

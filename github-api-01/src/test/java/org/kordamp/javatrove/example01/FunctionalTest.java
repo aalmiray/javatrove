@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kordamp.javatrove.example01.model.Repository;
 import org.kordamp.javatrove.example01.service.GithubAPI;
-import org.kordamp.javatrove.example01.util.ApplicationEventHandler;
 import org.kordamp.javatrove.example01.view.AppView;
 import org.testfx.framework.junit.ApplicationRule;
 import org.testfx.service.support.WaitUntilSupport;
@@ -58,13 +57,12 @@ public class FunctionalTest {
 
     @Inject private ObjectMapper objectMapper;
     @Inject private AppView view;
-    @Inject private ApplicationEventHandler eventHandler;
 
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(8080);
 
     @Rule
-    public ApplicationRule textfx = new ApplicationRule(stage -> {
+    public ApplicationRule testfx = new ApplicationRule(stage -> {
         stage.setScene(view.createScene());
         stage.sizeToScene();
         stage.setResizable(false);
@@ -80,15 +78,15 @@ public class FunctionalTest {
                 .withStatus(200)
                 .withHeader("Content-Type", "text/json")
                 .withBody(repositoriesAsJSON(repositories, objectMapper))));
-        textfx.clickOn("#organization")
-            .eraseText(ORGANIZATION.length())
-            .write(ORGANIZATION);
 
         // when:
-        textfx.clickOn("#loadButton");
+        testfx.clickOn("#organization")
+            .eraseText(ORGANIZATION.length())
+            .write(ORGANIZATION);
+        testfx.clickOn("#loadButton");
 
         // wait
-        Button loadButton = textfx.lookup("#loadButton").query();
+        Button loadButton = testfx.lookup("#loadButton").query();
         new WaitUntilSupport().waitUntil(loadButton, isEnabled(), 2);
 
         // then:
@@ -103,16 +101,15 @@ public class FunctionalTest {
             .willReturn(aResponse()
                 .withStatus(500)
                 .withStatusMessage("Internal Error")));
-        textfx.clickOn("#organization")
-            .eraseText(ORGANIZATION.length())
-            .write(ORGANIZATION);
 
         // when:
-        textfx.clickOn("#loadButton");
+        testfx.clickOn("#organization")
+            .eraseText(ORGANIZATION.length())
+            .write(ORGANIZATION);
+        testfx.clickOn("#loadButton");
 
-        // wait
-        Button loadButton = textfx.lookup("#loadButton").query();
-        new WaitUntilSupport().waitUntil(loadButton, isEnabled(), 5);
+        // then:
+        new WaitUntilSupport().waitUntil(testfx.window("Error"), WindowMatchers.isShowing(), 5);
     }
 
     public static class AppTestModule extends AppModule {

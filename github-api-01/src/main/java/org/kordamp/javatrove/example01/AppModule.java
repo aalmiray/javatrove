@@ -105,7 +105,7 @@ public class AppModule extends ExtAnnotationsModule {
 
     protected void bindApplicationEventHandler() {
         bind(ApplicationEventHandler.class)
-            .in(Singleton.class);
+            .asEagerSingleton();
     }
 
     protected void bindAppController() {

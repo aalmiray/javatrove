@@ -52,6 +52,7 @@ public class ApplicationEventHandler {
     public void handleThrowable(ThrowableEvent event) {
         Platform.runLater(() -> {
             TitledPane pane = new TitledPane();
+            pane.setId("stacktrace");
             pane.setCollapsible(false);
             pane.setText("Stacktrace");
             TextArea textArea = new TextArea();

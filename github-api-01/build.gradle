@@ -32,8 +32,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
 
     compile "net.engio:mbassador:$mbassadorVersion"
     compile "org.reactfx:reactfx:2.0-M5"
@@ -55,7 +55,7 @@ dependencies {
     testCompile "org.mockito:mockito-core:$mockitoVersion"
     testCompile "org.jukito:jukito:$jukitoVersion"
     testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
-    testCompile "com.jayway.awaitility:awaitility:$awaitilityVersion"
+    testCompile "org.awaitility:awaitility:$awaitilityVersion"
     testCompile "com.github.tomakehurst:wiremock:$wiremockVersion"
     testCompile "org.testfx:testfx-core:$testfxVersion"
     testCompile "org.testfx:testfx-junit:$testfxVersion"
@@ -78,4 +78,26 @@ license {
 
 jacoco {
     toolVersion = '0.7.7.201606060606'
+}
+
+idea {
+    project {
+        jdkName "1.8"
+        languageLevel "1.8"
+        ipr {
+            withXml { provider ->
+                def node = provider.asNode()
+                node.component.find { it.'@name' == 'VcsDirectoryMappings' }?.mapping[0].'@vcs' = 'Git'
+
+                def compilerConfiguration = node.component.find { it.'@name' == 'CompilerConfiguration' }
+                compilerConfiguration.remove(compilerConfiguration.annotationProcessing)
+                compilerConfiguration.append(new XmlParser().parseText("""
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>"""))
+            }
+        }
+    }
 }

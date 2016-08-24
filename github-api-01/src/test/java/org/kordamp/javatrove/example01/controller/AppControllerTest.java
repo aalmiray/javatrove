@@ -34,11 +34,10 @@ import org.kordamp.javatrove.example01.util.ApplicationEventBus;
 import org.kordamp.javatrove.example01.util.ThrowableEvent;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.Collection;
 
-import static com.jayway.awaitility.Awaitility.await;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
@@ -60,7 +59,6 @@ public class AppControllerTest {
     public static class Module extends JukitoModule {
         protected void configureTest() {
             bind(AppController.class);
-            bind(AppModel.class).in(Singleton.class);
         }
     }
 
