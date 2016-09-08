@@ -22,7 +22,6 @@ import lombok.Getter;
 import net.engio.mbassy.listener.Handler;
 import org.jdeferred.Promise;
 import org.jdeferred.impl.DeferredObject;
-import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,15 +51,10 @@ import static org.mockito.Mockito.when;
 @RunWith(JukitoRunner.class)
 public class AppControllerTest {
     private static final String ORGANIZATION = "foo";
+
     @Inject private AppController controller;
     @Inject private AppModel model;
     @Inject private ApplicationEventBus eventBus;
-
-    public static class Module extends JukitoModule {
-        protected void configureTest() {
-            bind(AppController.class);
-        }
-    }
 
     @Test
     public void happyPath(Github github) {
