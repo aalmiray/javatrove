@@ -109,7 +109,7 @@ public class AppModule extends ExtAnnotationsModule {
     }
 
     protected void bindAppController() {
-        bind(AppModel.class).in(Singleton.class);
+        bind(AppController.class).in(Singleton.class);
     }
 
     protected void bindAppModel() {
