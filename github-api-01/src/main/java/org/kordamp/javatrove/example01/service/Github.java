@@ -23,6 +23,9 @@ import org.kordamp.javatrove.example01.model.Repository;
 
 import java.util.Collection;
 
+/**
+ * @author Andres Almiray
+ */
 public interface Github {
     Promise<Collection<Repository>, Throwable, Void> repositories(String name);
 }

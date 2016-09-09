@@ -19,8 +19,6 @@
 package org.kordamp.javatrove.example01.util;
 
 /**
- * Base event class.
- *
  * @author Andres Almiray
  */
 public class ApplicationEvent {

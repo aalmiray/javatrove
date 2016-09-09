@@ -31,8 +31,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 /**
- * Default application event handler.
- *
  * @author Andres Almiray
  */
 public class ApplicationEventHandler {

@@ -21,8 +21,6 @@ package org.kordamp.javatrove.example01.util;
 import net.engio.mbassy.bus.MBassador;
 
 /**
- * Application scoped event bus.
- *
  * @author Andres Almiray
  */
 public class ApplicationEventBus extends MBassador<ApplicationEvent> {
