@@ -23,17 +23,17 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import javafx.scene.control.Button;
 import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kordamp.javatrove.example01.model.Repository;
+import org.junit.runners.MethodSorters;
 import org.kordamp.javatrove.example01.service.GithubAPI;
 import org.kordamp.javatrove.example01.view.AppView;
 import org.testfx.framework.junit.ApplicationRule;
 import org.testfx.service.support.WaitUntilSupport;
 
 import javax.inject.Inject;
-import java.util.Collection;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -52,6 +52,7 @@ import static org.testfx.matcher.control.ListViewMatchers.hasItems;
  */
 @RunWith(JukitoRunner.class)
 @UseModules({FunctionalTest.AppTestModule.class})
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FunctionalTest {
     private static final String ORGANIZATION = "foo";
 
@@ -70,14 +71,13 @@ public class FunctionalTest {
     });
 
     @Test
-    public void happyPath() throws Exception {
+    public void _01_happy_path() throws Exception {
         // given:
-        Collection<Repository> repositories = createSampleRepositories();
         stubFor(get(urlEqualTo("/orgs/" + ORGANIZATION + "/repos"))
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "text/json")
-                .withBody(repositoriesAsJSON(repositories, objectMapper))));
+                .withBody(repositoriesAsJSON(createSampleRepositories(), objectMapper))));
 
         // when:
         testfx.clickOn("#organization")
@@ -95,7 +95,7 @@ public class FunctionalTest {
     }
 
     @Test
-    public void failurePath() {
+    public void _02_failure_path() {
         // given:
         stubFor(get(urlEqualTo("/orgs/" + ORGANIZATION + "/repos"))
             .willReturn(aResponse()
