@@ -37,9 +37,9 @@ public class GithubImpl implements Github {
     @Inject private DeferredManager deferredManager;
 
     @Override
-    public Promise<Collection<Repository>, Throwable, Void> repositories(final String name) {
+    public Promise<Collection<Repository>, Throwable, Void> repositories(final String organization) {
         return deferredManager.when(() -> {
-            Response<List<Repository>> response = api.repositories(name).execute();
+            Response<List<Repository>> response = api.repositories(organization).execute();
             if (response.isSuccess()) { return response.body(); }
             throw new IllegalStateException(response.message());
         });

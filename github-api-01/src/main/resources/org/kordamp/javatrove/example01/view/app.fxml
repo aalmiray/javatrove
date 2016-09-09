@@ -43,7 +43,7 @@
 
     <Label text="Repositories:"
            GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <Label fx:id="total" text=""
+    <Label fx:id="total"
            GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
     <ListView fx:id="repositories" GridPane.columnSpan="2"

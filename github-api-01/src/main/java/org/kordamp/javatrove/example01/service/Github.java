@@ -27,5 +27,5 @@ import java.util.Collection;
  * @author Andres Almiray
  */
 public interface Github {
-    Promise<Collection<Repository>, Throwable, Void> repositories(String name);
+    Promise<Collection<Repository>, Throwable, Void> repositories(String organization);
 }

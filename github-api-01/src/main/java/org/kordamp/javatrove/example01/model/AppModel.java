@@ -26,6 +26,7 @@ import javafx.collections.ObservableList;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static org.kordamp.javatrove.example01.model.State.READY;
+import static org.kordamp.javatrove.example01.model.State.RUNNING;
 
 /**
  * @author Andres Almiray
@@ -37,12 +38,8 @@ public class AppModel {
 
     public AppModel() {
         stateProperty().addListener((observable, oldValue, newValue) -> {
-            switch (newValue) {
-                case RUNNING:
-                    repositories.clear();
-                    break;
-                case READY:
-                    break;
+            if (newValue == RUNNING) {
+                repositories.clear();
             }
         });
     }
