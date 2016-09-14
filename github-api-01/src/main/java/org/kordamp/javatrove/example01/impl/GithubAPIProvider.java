@@ -20,8 +20,8 @@ package org.kordamp.javatrove.example01.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kordamp.javatrove.example01.service.GithubAPI;
-import retrofit.JacksonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.inject.Inject;
 import javax.inject.Named;

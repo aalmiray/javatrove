@@ -23,7 +23,7 @@ import org.jdeferred.Promise;
 import org.kordamp.javatrove.example01.model.Repository;
 import org.kordamp.javatrove.example01.service.Github;
 import org.kordamp.javatrove.example01.service.GithubAPI;
-import retrofit.Response;
+import retrofit2.Response;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -40,7 +40,7 @@ public class GithubImpl implements Github {
     public Promise<Collection<Repository>, Throwable, Void> repositories(final String organization) {
         return deferredManager.when(() -> {
             Response<List<Repository>> response = api.repositories(organization).execute();
-            if (response.isSuccess()) { return response.body(); }
+            if (response.isSuccessful()) { return response.body(); }
             throw new IllegalStateException(response.message());
         });
     }
