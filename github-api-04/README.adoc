@@ -1,0 +1,39 @@
+= Example 04
+
+Simple JavaFX based application that can issue a REST call to GitHub's API.
+
+This version builds on the concepts shown by `Example 03` but uses Spring as
+dependency injection container instead.
+
+Libraries used in this project:
+
+ * link:http://projects.spring.io/spring-framework/[Spring Framework].
+ * link:http://square.github.io/retrofit[Retrofit]
+ * link:https://github.com/FasterXML/jackson[Jackson].
+ * link:https://projectlombok.org/features/index.html[Lombok].
+ * link:https://github.com/ReactiveX/RxJava[RxJava].
+ * link:https://github.com/bennidi/mbassador[MBassador].
+
+== License
+
+All code found in this repository is licensed under GPL v3
+
+[source]
+----
+Copyright 2016 Andres Almiray
+
+This file is part of Java Trove Examples
+
+Java Trove Examples is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Java Trove Examples is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+----

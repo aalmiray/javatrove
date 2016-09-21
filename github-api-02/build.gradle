@@ -1,0 +1,103 @@
+/*
+ * Copyright 2016 Andres Almiray
+ *
+ * This file is part of Java Trove Examples
+ *
+ * Java Trove Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Java Trove Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+    id 'jacoco'
+    id 'com.github.ben-manes.versions' version '0.13.0'
+    id 'com.github.hierynomus.license' version '0.11.0'
+    id 'org.kordamp.gradle.stats' version '0.2.0'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+    compile "net.engio:mbassador:$mbassadorVersion"
+    compile "org.reactfx:reactfx:2.0-M5"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.jdeferred:jdeferred-core:$jdeferredVersion"
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
+    compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile("com.google.inject:guice:$guiceVersion") {
+        exclude group: 'org.sonatype.sisu.inject', module: 'cglib'
+    }
+    compile "ru.vyarus:guice-ext-annotations:1.1.1"
+
+    runtime "org.slf4j:slf4j-simple:$slf4jVersion"
+
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.jukito:jukito:$jukitoVersion"
+    testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
+    testCompile "org.awaitility:awaitility:$awaitilityVersion"
+    testCompile "com.github.tomakehurst:wiremock:$wiremockVersion"
+    testCompile "org.testfx:testfx-core:$testfxVersion"
+    testCompile "org.testfx:testfx-junit:$testfxVersion"
+}
+
+mainClassName = 'org.kordamp.javatrove.example02.Launcher'
+
+license {
+    header = rootProject.file('gradle/HEADER')
+    strictCheck = true
+    ignoreFailures = true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        fxml = 'XML_STYLE'
+    }
+    ext.year    = '2016'
+    ext.author  = 'Andres Almiray'
+    ext.project = 'Java Trove Examples'
+}
+
+jacoco {
+    toolVersion = '0.7.7.201606060606'
+}
+
+idea {
+    project {
+        jdkName "1.8"
+        languageLevel "1.8"
+        ipr {
+            withXml { provider ->
+                def node = provider.asNode()
+                node.component.find { it.'@name' == 'VcsDirectoryMappings' }?.mapping[0].'@vcs' = 'Git'
+
+                def compilerConfiguration = node.component.find { it.'@name' == 'CompilerConfiguration' }
+                compilerConfiguration.remove(compilerConfiguration.annotationProcessing)
+                compilerConfiguration.append(new XmlParser().parseText("""
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>"""))
+            }
+        }
+    }
+}

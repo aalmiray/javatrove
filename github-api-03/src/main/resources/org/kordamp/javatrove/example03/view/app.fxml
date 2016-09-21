@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2016 Andres Almiray
+
+    This file is part of Java Trove Examples
+
+    Java Trove Examples is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Java Trove Examples is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<GridPane prefHeight="480"
+          hgap="10" vgap="10"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="org.kordamp.javatrove.example03.view.AppView">
+    <padding>
+        <Insets top="10" left="10" right="10" bottom="10"/>
+    </padding>
+    <Label text="Organization:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="organization" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+    <Label text="Limit:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="limit" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+    <Button fx:id="loadButton" text="Load" onAction="#load"
+            GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <Button fx:id="cancelButton" text="Cancel" onAction="#cancel"
+            GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <ProgressBar fx:id="progress" visible="false"
+                 GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+
+    <Label text="Repositories:"
+           GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <Label fx:id="total"
+           GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+    <ListView fx:id="repositories" GridPane.columnSpan="3"
+              GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+</GridPane>
