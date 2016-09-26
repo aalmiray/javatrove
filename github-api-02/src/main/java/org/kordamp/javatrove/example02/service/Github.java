@@ -27,5 +27,5 @@ import java.util.Collection;
  * @author Andres Almiray
  */
 public interface Github {
-    CancellablePromise<Collection<Repository>, Repository> repositories(String organization, int limit);
+    CancellablePromise<Collection<Repository>, Throwable, Repository> repositories(String organization, int limit);
 }

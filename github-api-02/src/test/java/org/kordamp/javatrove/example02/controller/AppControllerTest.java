@@ -132,7 +132,7 @@ public class AppControllerTest {
         // given:
         List<Repository> repositories = TestHelper.createSampleRepositories();
         Deferred<Collection<Repository>, Throwable, Repository> promise = new DeferredObject<>();
-        CancellablePromiseStub<Collection<Repository>, Repository> stub = new CancellablePromiseStub<>(promise);
+        CancellablePromiseStub<Collection<Repository>, Throwable, Repository> stub = new CancellablePromiseStub<>(promise);
         when(github.repositories(ORGANIZATION, 10)).thenAnswer(invocation -> stub);
 
         // when:
@@ -181,11 +181,11 @@ public class AppControllerTest {
         }
     }
 
-    private static class CancellablePromiseStub<D, P> extends DelegatingPromise<D, Throwable, P> implements CancellablePromise<D, P> {
+    private static class CancellablePromiseStub<D, F, P> extends DelegatingPromise<D, F, P> implements CancellablePromise<D, F, P> {
         @Getter
         private final AtomicBoolean cancelled = new AtomicBoolean(false);
 
-        public CancellablePromiseStub(Promise<D, Throwable, P> delegate) {
+        public CancellablePromiseStub(Promise<D, F, P> delegate) {
             super(delegate);
         }
 

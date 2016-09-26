@@ -46,7 +46,7 @@ public class AppModel {
 
     @Getter
     @Setter
-    private CancellablePromise<Collection<Repository>, Repository> promise;
+    private CancellablePromise<Collection<Repository>, Throwable, Repository> promise;
 
     public AppModel() {
         stateProperty().addListener((observable, oldValue, newValue) -> {

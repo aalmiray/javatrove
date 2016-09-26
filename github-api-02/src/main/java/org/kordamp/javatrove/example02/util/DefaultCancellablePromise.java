@@ -28,10 +28,10 @@ import static java.util.Objects.requireNonNull;
 /**
  * @author Andres Almiray
  */
-public class DefaultCancellablePromise<D, P> extends DelegatingPromise<D, Throwable, P> implements CancellablePromise<D, P> {
+public class DefaultCancellablePromise<D, F, P> extends DelegatingPromise<D, F, P> implements CancellablePromise<D, F, P> {
     private final DeferredFutureTask<D, P> futureTask;
 
-    public DefaultCancellablePromise(Promise<D, Throwable, P> delegate, DeferredFutureTask<D, P> futureTask) {
+    public DefaultCancellablePromise(Promise<D, F, P> delegate, DeferredFutureTask<D, P> futureTask) {
         super(delegate);
         this.futureTask = requireNonNull(futureTask, "Argument 'futureTask' must not be null");
     }

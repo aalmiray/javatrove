@@ -47,7 +47,7 @@ public class GithubImpl implements Github {
     @Inject private DeferredManager deferredManager;
 
     @Override
-    public CancellablePromise<Collection<Repository>, Repository> repositories(final String organization, final int limit) {
+    public CancellablePromise<Collection<Repository>, Throwable, Repository> repositories(final String organization, final int limit) {
         DeferredFutureTask<Collection<Repository>, Repository> futureTask = new DeferredFutureTask<>(new DeferredCallable<Collection<Repository>, Repository>() {
             @Override
             public Collection<Repository> call() throws Exception {
