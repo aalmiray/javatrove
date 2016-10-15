@@ -3,7 +3,8 @@
 Simple JavaFX based application that can issue a REST call to GitHub's API.
 Relies on JDeferred to invoke network calls on a background thread.
 
-The code is explained in full detail at https://community.oracle.com/docs/DOC-1005785.
+The code is explained in full detail at https://community.oracle.com/docs/DOC-1005785
+and https://community.oracle.com/docs/DOC-1007145.
 
 Libraries used in this project:
 
