@@ -70,8 +70,8 @@ public class AppView {
     private BooleanProperty running = new SimpleBooleanProperty(this, "running", false);
 
     public Scene createScene() {
-        URL fxml = getClass().getClassLoader()
-            .getResource(getClass().getPackage().getName().replace('.', '/') + "/app.fxml");
+        String basename = getClass().getPackage().getName().replace('.', '/') + "/app";
+        URL fxml = getClass().getClassLoader().getResource(basename + ".fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(fxml);
         fxmlLoader.setControllerFactory(param -> AppView.this);
         Parent root = null;
@@ -113,7 +113,9 @@ public class AppView {
         cancelButton.disableProperty().bind(Bindings.not(running));
         progress.visibleProperty().bind(running);
 
-        return new Scene(root);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().addAll(basename + ".css", "bootstrapfx.css");
+        return scene;
     }
 
     public void load(ActionEvent ignored) {

@@ -50,6 +50,7 @@ import static java.util.Objects.requireNonNull;
 import static javafx.beans.binding.Bindings.bindBidirectional;
 import static org.kordamp.javatrove.example04.model.State.DISABLED;
 import static org.kordamp.javatrove.example04.model.State.READY;
+import static org.kordamp.javatrove.example04.util.StringUtils.isBlank;
 
 /**
  * @author Andres Almiray
@@ -71,8 +72,8 @@ public class AppView {
     private BooleanProperty running = new SimpleBooleanProperty(this, "running", false);
 
     public Scene createScene() {
-        URL fxml = getClass().getClassLoader()
-            .getResource(getClass().getPackage().getName().replace('.', '/') + "/app.fxml");
+        String basename = getClass().getPackage().getName().replace('.', '/') + "/app";
+        URL fxml = getClass().getClassLoader().getResource(basename + ".fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(fxml);
         fxmlLoader.setControllerFactory(param -> AppView.this);
         Parent root = null;
@@ -114,7 +115,9 @@ public class AppView {
         cancelButton.disableProperty().bind(Bindings.not(running));
         progress.visibleProperty().bind(running);
 
-        return new Scene(root);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().addAll(basename + ".css", "bootstrapfx.css");
+        return scene;
     }
 
     public void load(ActionEvent ignored) {
@@ -123,10 +126,6 @@ public class AppView {
 
     public void cancel(ActionEvent ignored) {
         controller.cancel();
-    }
-
-    private static boolean isBlank(String str) {
-        return str == null || str.trim().length() == 0;
     }
 
     private static <E> ObservableList<E> createJavaFXThreadProxyList(ObservableList<E> source) {

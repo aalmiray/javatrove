@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2016 Andres Almiray
  *
  * This file is part of Java Trove Examples
@@ -16,13 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example02.util;
-
-import org.jdeferred.Promise;
-
-/**
- * @author Andres Almiray
- */
-public interface CancellablePromise<D, F, P> extends Promise<D, F, P> {
-    void cancel();
+.ikonli-font-icon {
+    -fx-icon-color: white;
 }

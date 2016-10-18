@@ -47,6 +47,10 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     compile 'javax.inject:javax.inject:1'
     compile "org.springframework:spring-context:$springVersion"
+    compile "org.kordamp.bootstrapfx:bootstrapfx-core:$bootstrapfxVersion"
+    compile "org.kordamp.ikonli:ikonli-javafx:$ikonliVersion"
+    compile "org.kordamp.ikonli:ikonli-typicons-pack:$ikonliVersion"
+    compile "com.miglayout:miglayout-javafx:$miglayoutVersion"
 
     runtime "org.slf4j:slf4j-simple:$slf4jVersion"
 
