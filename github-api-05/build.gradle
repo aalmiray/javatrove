@@ -59,7 +59,7 @@ dependencies {
     testCompile "org.testfx:testfx-junit:$testfxVersion"
 }
 
-mainClassName = 'org.kordamp.javatrove.example04.Launcher'
+mainClassName = 'org.kordamp.javatrove.example05.Launcher'
 
 license {
     header = rootProject.file('gradle/HEADER')

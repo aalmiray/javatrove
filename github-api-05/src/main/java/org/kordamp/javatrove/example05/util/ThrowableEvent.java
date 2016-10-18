@@ -16,14 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.util;
+package org.kordamp.javatrove.example05.util;
 
-import net.engio.mbassy.bus.MBassador;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Andres Almiray
  */
-@Component
-public class ApplicationEventBus extends MBassador<ApplicationEvent> {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ThrowableEvent extends ApplicationEvent {
+    private final Throwable throwable;
 }

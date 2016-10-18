@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.impl;
+package org.kordamp.javatrove.example05.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
@@ -24,15 +24,16 @@ import lombok.Data;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kordamp.javatrove.example04.AppConfig;
-import org.kordamp.javatrove.example04.model.Repository;
-import org.kordamp.javatrove.example04.service.Github;
-import org.kordamp.javatrove.example04.service.GithubAPI;
+import org.kordamp.javatrove.example05.AppConfig;
+import org.kordamp.javatrove.example05.model.Repository;
+import org.kordamp.javatrove.example05.service.Github;
+import org.kordamp.javatrove.example05.service.GithubAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import reactor.core.scheduler.Schedulers;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,12 +46,14 @@ import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.kordamp.javatrove.example04.TestHelper.createSampleRepositories;
-import static org.kordamp.javatrove.example04.TestHelper.repositoriesAsJSON;
+import static org.kordamp.javatrove.example05.TestHelper.createSampleRepositories;
+import static org.kordamp.javatrove.example05.TestHelper.repositoriesAsJSON;
 
 /**
  * @author Andres Almiray
@@ -114,12 +117,13 @@ public class GithubImplTest {
         List<Repository> results = new ArrayList<>();
         github.repositories(ORGANIZATION)
             .doOnError(capture::setThrowable)
-            .onErrorReturn(throwable -> null)
             .doOnNext(results::add)
+            .subscribeOn(Schedulers.parallel())
             .subscribe();
 
+        await().timeout(2L, SECONDS).until(() -> capture.getThrowable(), notNullValue());
+
         // then:
-        assertThat(capture.getThrowable(), notNullValue());
         assertThat(capture.getThrowable().getMessage(), equalTo("Internal Error"));
         verify(getRequestedFor(urlEqualTo("/orgs/" + ORGANIZATION + "/repos")));
         verify(getRequestedFor(urlEqualTo(nextUrl)));
@@ -131,7 +135,7 @@ public class GithubImplTest {
     }
 
     @Configuration
-    @ComponentScan("org.kordamp.javatrove.example04.impl")
+    @ComponentScan("org.kordamp.javatrove.example05.impl")
     static class Config extends AppConfig {
         @Bean
         @Named(GithubAPI.GITHUB_API_URL_KEY)

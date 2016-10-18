@@ -16,14 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.util;
+package org.kordamp.javatrove.example05.service;
 
-import net.engio.mbassy.bus.MBassador;
-import org.springframework.stereotype.Component;
+import org.kordamp.javatrove.example05.model.Repository;
+import reactor.core.publisher.Flux;
+import retrofit2.Response;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Url;
+
+import java.util.List;
 
 /**
  * @author Andres Almiray
  */
-@Component
-public class ApplicationEventBus extends MBassador<ApplicationEvent> {
+public interface GithubAPI {
+    String GITHUB_API_URL_KEY = "GITHUB_API_URL";
+
+    @GET("/orgs/{organization}/repos")
+    Flux<Response<List<Repository>>> repositories(@Path("organization") String organization);
+
+    @GET
+    Flux<Response<List<Repository>>> repositoriesPaginate(@Url String url);
 }

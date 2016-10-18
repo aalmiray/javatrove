@@ -16,17 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.impl;
+package org.kordamp.javatrove.example05.impl;
 
-import org.kordamp.javatrove.example04.model.Repository;
-import org.kordamp.javatrove.example04.service.Github;
-import org.kordamp.javatrove.example04.service.GithubAPI;
-import org.kordamp.javatrove.example04.util.Links;
+import org.kordamp.javatrove.example05.model.Repository;
+import org.kordamp.javatrove.example05.service.Github;
+import org.kordamp.javatrove.example05.service.GithubAPI;
+import org.kordamp.javatrove.example05.util.Links;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import retrofit2.Response;
-import rx.Observable;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -43,7 +43,7 @@ public class GithubImpl implements Github {
     @Inject private GithubAPI api;
 
     @Override
-    public Observable<Repository> repositories(String organization) {
+    public Flux<Repository> repositories(String organization) {
         requireNonNull(organization, "Argument 'organization' must not be blank");
 
         return paginatedObservable(
@@ -58,32 +58,32 @@ public class GithubImpl implements Github {
             });
     }
 
-    private static <T> Observable<T> paginatedObservable(FirstPageSupplier<T> firstPage, NextPageSupplier<T> nextPage) {
+    private static <T> Flux<T> paginatedObservable(FirstPageSupplier<T> firstPage, NextPageSupplier<T> nextPage) {
         requireNonNull(firstPage, "Argument 'firstPage' must not be null");
         requireNonNull(nextPage, "Argument 'nextPage' must not be null");
 
         return processPage(nextPage, firstPage.get());
     }
 
-    private static <T> Observable<T> processPage(NextPageSupplier<T> supplier, Observable<Response<List<T>>> items) {
+    private static <T> Flux<T> processPage(NextPageSupplier<T> supplier, Flux<Response<List<T>>> items) {
         return items.flatMap(response -> {
             if (response.isSuccessful()) {
                 Links links = Links.of(response.headers().get("Link"));
-                Observable<T> currentPage = Observable.from(response.body());
+                Flux<T> currentPage = Flux.fromIterable(response.body());
                 if (links.hasNext()) {
                     return currentPage.concatWith(processPage(supplier, supplier.get(links)));
                 }
                 return currentPage;
             }
-            return Observable.error(new HttpResponseException(response.code(), response.message()));
+            return Flux.error(new HttpResponseException(response.code(), response.message()));
         });
     }
 
     private interface FirstPageSupplier<T> {
-        Observable<Response<List<T>>> get();
+        Flux<Response<List<T>>> get();
     }
 
     private interface NextPageSupplier<T> {
-        Observable<Response<List<T>>> get(Links links);
+        Flux<Response<List<T>>> get(Links links);
     }
 }

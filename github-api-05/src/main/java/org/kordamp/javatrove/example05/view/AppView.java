@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.view;
+package org.kordamp.javatrove.example05.view;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -36,9 +36,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
-import org.kordamp.javatrove.example04.controller.AppController;
-import org.kordamp.javatrove.example04.model.AppModel;
-import org.kordamp.javatrove.example04.model.Repository;
+import org.kordamp.javatrove.example05.controller.AppController;
+import org.kordamp.javatrove.example05.model.AppModel;
+import org.kordamp.javatrove.example05.model.Repository;
 import org.reactfx.EventStreams;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +48,8 @@ import java.net.URL;
 
 import static java.util.Objects.requireNonNull;
 import static javafx.beans.binding.Bindings.bindBidirectional;
-import static org.kordamp.javatrove.example04.model.State.DISABLED;
-import static org.kordamp.javatrove.example04.model.State.READY;
+import static org.kordamp.javatrove.example05.model.State.DISABLED;
+import static org.kordamp.javatrove.example05.model.State.READY;
 
 /**
  * @author Andres Almiray

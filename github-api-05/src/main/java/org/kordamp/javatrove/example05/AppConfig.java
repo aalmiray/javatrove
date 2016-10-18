@@ -16,15 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04;
+package org.kordamp.javatrove.example05;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.kordamp.javatrove.example04.model.Repository;
-import org.kordamp.javatrove.example04.service.GithubAPI;
+import com.jakewharton.retrofit2.adapter.reactor.ReactorCallAdapterFactory;
+import org.kordamp.javatrove.example05.model.Repository;
+import org.kordamp.javatrove.example05.service.GithubAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.inject.Named;
@@ -52,7 +52,7 @@ public class AppConfig {
         return new Retrofit.Builder()
             .baseUrl(githubApiUrl)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(ReactorCallAdapterFactory.create())
             .build()
             .create(GithubAPI.class);
     }

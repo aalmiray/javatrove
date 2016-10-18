@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.util;
-
-import net.engio.mbassy.bus.MBassador;
-import org.springframework.stereotype.Component;
+package org.kordamp.javatrove.example05.model;
 
 /**
  * @author Andres Almiray
  */
-@Component
-public class ApplicationEventBus extends MBassador<ApplicationEvent> {
+public enum State {
+    DISABLED,
+    READY,
+    RUNNING
 }

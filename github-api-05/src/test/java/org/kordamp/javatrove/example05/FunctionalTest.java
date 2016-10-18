@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04;
+package org.kordamp.javatrove.example05;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
@@ -26,12 +26,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.kordamp.javatrove.example04.impl.GithubImpl;
-import org.kordamp.javatrove.example04.model.Repository;
-import org.kordamp.javatrove.example04.service.Github;
-import org.kordamp.javatrove.example04.service.GithubAPI;
-import org.kordamp.javatrove.example04.util.ApplicationEventHandler;
-import org.kordamp.javatrove.example04.view.AppView;
+import org.kordamp.javatrove.example05.impl.GithubImpl;
+import org.kordamp.javatrove.example05.model.Repository;
+import org.kordamp.javatrove.example05.service.Github;
+import org.kordamp.javatrove.example05.service.GithubAPI;
+import org.kordamp.javatrove.example05.util.ApplicationEventHandler;
+import org.kordamp.javatrove.example05.view.AppView;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -48,8 +48,8 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static org.kordamp.javatrove.example04.TestHelper.createSampleRepositories;
-import static org.kordamp.javatrove.example04.TestHelper.repositoriesAsJSON;
+import static org.kordamp.javatrove.example05.TestHelper.createSampleRepositories;
+import static org.kordamp.javatrove.example05.TestHelper.repositoriesAsJSON;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
@@ -164,7 +164,7 @@ public class FunctionalTest {
     }
 
     @Configuration
-    @ComponentScan("org.kordamp.javatrove.example04")
+    @ComponentScan("org.kordamp.javatrove.example05")
     static class Config extends AppConfig {
         @Bean
         @Named(GithubAPI.GITHUB_API_URL_KEY)

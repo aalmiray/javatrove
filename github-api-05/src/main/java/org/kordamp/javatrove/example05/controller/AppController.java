@@ -16,22 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.controller;
+package org.kordamp.javatrove.example05.controller;
 
-import org.kordamp.javatrove.example04.model.AppModel;
-import org.kordamp.javatrove.example04.model.Repository;
-import org.kordamp.javatrove.example04.service.Github;
-import org.kordamp.javatrove.example04.util.ApplicationEventBus;
-import org.kordamp.javatrove.example04.util.ThrowableEvent;
+import org.kordamp.javatrove.example05.model.AppModel;
+import org.kordamp.javatrove.example05.model.Repository;
+import org.kordamp.javatrove.example05.service.Github;
+import org.kordamp.javatrove.example05.util.ApplicationEventBus;
+import org.kordamp.javatrove.example05.util.ThrowableEvent;
 import org.springframework.stereotype.Component;
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 import javax.inject.Inject;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
-import static org.kordamp.javatrove.example04.model.State.READY;
-import static org.kordamp.javatrove.example04.model.State.RUNNING;
+import static org.kordamp.javatrove.example05.model.State.READY;
+import static org.kordamp.javatrove.example05.model.State.RUNNING;
 
 /**
  * @author Andres Almiray
@@ -43,23 +43,22 @@ public class AppController {
     @Inject private ApplicationEventBus eventBus;
 
     public void load() {
-        Observable<Repository> observable = github.repositories(model.getOrganization());
+        Flux<Repository> flux = github.repositories(model.getOrganization());
         if (model.getLimit() > 0) {
-            observable = observable.take(model.getLimit());
+            flux = flux.take(model.getLimit());
         }
 
-        model.setSubscription(observable
-            .timeout(10, TimeUnit.SECONDS)
-            .doOnSubscribe(() -> model.setState(RUNNING))
+        model.setCancellation(flux.timeout(Duration.ofSeconds(10L))
+            .doOnSubscribe(subscription -> model.setState(RUNNING))
             .doOnTerminate(() -> model.setState(READY))
             .doOnError(throwable -> eventBus.publishAsync(new ThrowableEvent(throwable)))
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.parallel())
             .subscribe(model.getRepositories()::add));
     }
 
     public void cancel() {
-        if (model.getSubscription() != null) {
-            model.getSubscription().unsubscribe();
+        if (model.getCancellation() != null) {
+            model.getCancellation().dispose();
             model.setState(READY);
         }
     }

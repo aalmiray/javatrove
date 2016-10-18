@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example04.model;
+package org.kordamp.javatrove.example05.model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -28,11 +28,11 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import rx.Subscription;
+import reactor.core.Cancellation;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static org.kordamp.javatrove.example04.model.State.READY;
-import static org.kordamp.javatrove.example04.model.State.RUNNING;
+import static org.kordamp.javatrove.example05.model.State.READY;
+import static org.kordamp.javatrove.example05.model.State.RUNNING;
 
 /**
  * @author Andres Almiray
@@ -46,7 +46,7 @@ public class AppModel {
 
     @Getter
     @Setter
-    private Subscription subscription;
+    private Cancellation cancellation;
 
     public AppModel() {
         stateProperty().addListener((observable, oldValue, newValue) -> {
