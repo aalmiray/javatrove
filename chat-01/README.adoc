@@ -35,7 +35,7 @@ JARs with annotation processors will be found in the classpath.
 Eclipse:: You must enable "Annotation Processing" in the project preferences.
 You also need to manually specify which JARs contain annotation processors,
 this would be the Lombok dependency. Alternatively there's an UI based installer
-for Lombok that solves this problem
+for Lombok that solves this problem.
 
 == License
 

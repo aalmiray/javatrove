@@ -13,6 +13,25 @@ Libraries used in this project:
  * link:https://projectlombok.org/features/index.html[Lombok].
  * link:https://github.com/ReactiveX/RxJava[RxJava].
  * link:https://github.com/bennidi/mbassador[MBassador].
+== Running
+
+Run the application by invoking
+
+    $ ./gradlew run
+
+== IDE Configuration
+
+Make sure to have annotation processing enabled in your IDE.
+
+[horizontal]
+NetBeans:: This setting is enabled by default. JARs with annotation processors
+will be automatically found in the classpath.
+IntelliJ:: You must enable "Annotation Processing" in the project preferences.
+JARs with annotation processors will be found in the classpath.
+Eclipse:: You must enable "Annotation Processing" in the project preferences.
+You also need to manually specify which JARs contain annotation processors,
+this would be the Lombok dependency. Alternatively there's an UI based installer
+for Lombok that solves this problem.
 
 == License
 
