@@ -26,6 +26,7 @@
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 <?import org.tbee.javafx.scene.layout.fxml.MigPane?>
 <MigPane xmlns:fx="http://javafx.com/fxml"
+         prefWidth="400"
          layout="fill, wrap 3" cols="[20%][40%][40%]"
          fx:controller="org.kordamp.javatrove.example06.client.view.AppView">
     <Label text="Server:"/>

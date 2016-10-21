@@ -17,10 +17,21 @@
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
 
+.root {
+    -fx-background-color: white;
+}
+
 .ikonli-font-icon {
     -fx-icon-color: white;
 }
 
 .content--name {
     -fx-font-weight: bold;
+}
+
+.styled-text-area,
+.virtualized-scroll-pane {
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
 }

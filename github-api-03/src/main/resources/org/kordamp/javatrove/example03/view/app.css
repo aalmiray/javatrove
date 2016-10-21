@@ -16,6 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
+
+.root {
+    -fx-background-color: white;
+}
 .ikonli-font-icon {
     -fx-icon-color: white;
 }
