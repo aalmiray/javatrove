@@ -18,6 +18,7 @@
  */
 package org.kordamp.javatrove.example06.client.model;
 
+import com.esotericsoftware.kryonet.Client;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -26,7 +27,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import lombok.Getter;
+import lombok.Setter;
 import org.kordamp.javatrove.example06.KryoUtil;
+
+import java.util.Optional;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -42,6 +46,13 @@ public class AppModel {
     private StringProperty name;
     private StringProperty message;
     private BooleanProperty connected;
+
+    @Setter
+    private Client client;
+
+    public Optional<Client> getClient() {
+        return Optional.ofNullable(client);
+    }
 
     public StringProperty serverProperty() {
         if (server == null) {

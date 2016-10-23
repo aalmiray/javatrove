@@ -22,6 +22,7 @@ import com.esotericsoftware.kryonet.Client;
 import org.jdeferred.DeferredManager;
 import org.kordamp.javatrove.example06.client.controller.AppController;
 import org.kordamp.javatrove.example06.client.impl.ClientCommandDispatcherImpl;
+import org.kordamp.javatrove.example06.client.impl.ClientDisconnectCommandHandler;
 import org.kordamp.javatrove.example06.client.impl.ClientKryoListener;
 import org.kordamp.javatrove.example06.client.impl.ClientKryoListenerImpl;
 import org.kordamp.javatrove.example06.client.impl.ClientLoginCommandHandler;
@@ -36,7 +37,6 @@ import org.kordamp.javatrove.example06.client.view.AppView;
 import ru.vyarus.guice.ext.ExtAnnotationsModule;
 
 import javax.inject.Singleton;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,6 +60,7 @@ public class AppModule extends ExtAnnotationsModule {
         bindLoginCommandHandler();
         bindLogoutCommandHandler();
         bindMessageCommandHandler();
+        bindDisconnectCommandHandler();
         bindDeferredManager();
         bindApplicationEventBus();
         bindApplicationEventHandler();
@@ -108,6 +109,13 @@ public class AppModule extends ExtAnnotationsModule {
         bind(ClientCommandHandler.class)
             .annotatedWith(named(ClientMessageCommandHandler.NAME))
             .to(ClientMessageCommandHandler.class)
+            .in(Singleton.class);
+    }
+
+    protected void bindDisconnectCommandHandler() {
+        bind(ClientCommandHandler.class)
+            .annotatedWith(named(ClientDisconnectCommandHandler.NAME))
+            .to(ClientDisconnectCommandHandler.class)
             .in(Singleton.class);
     }
 

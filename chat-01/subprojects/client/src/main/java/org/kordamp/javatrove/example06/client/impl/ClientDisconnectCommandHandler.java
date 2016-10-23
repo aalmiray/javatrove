@@ -18,39 +18,44 @@
  */
 package org.kordamp.javatrove.example06.client.impl;
 
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import org.kordamp.javatrove.example06.Command;
 import org.kordamp.javatrove.example06.DisconnectCommand;
-import org.kordamp.javatrove.example06.LoginCommand;
-import org.kordamp.javatrove.example06.client.ClientCommandDispatcher;
+import org.kordamp.javatrove.example06.client.ClientCommandHandler;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 
 import javax.inject.Inject;
+import java.io.IOException;
 
 /**
  * @author Andres Almiray
  */
-public class ClientKryoListenerImpl extends ClientKryoListener {
-    @Inject private ClientCommandDispatcher clientCommandDispatcher;
+public class ClientDisconnectCommandHandler implements ClientCommandHandler {
+    public static final String NAME = "_DISCONNECT";
+
     @Inject private AppModel model;
 
     @Override
-    public void connected(Connection connection) {
-        clientCommandDispatcher.dispatch(client, connection, LoginCommand.builder()
-            .name(model.getName())
-            .build());
+    public <C extends Command> boolean supports(C command) {
+        return command instanceof DisconnectCommand;
     }
 
     @Override
-    public final void received(Connection connection, Object object) {
-        if (!(object instanceof Command)) {
-            return;
-        }
-        clientCommandDispatcher.dispatch(client, connection, (Command) object);
-    }
-
-    @Override
-    public void disconnected(Connection connection) {
-        clientCommandDispatcher.dispatch(client, connection, new DisconnectCommand());
+    public <C extends Command> void handle(final Client client, Connection connection, C command) {
+        model.getClient().ifPresent(c -> {
+            if (c == client) {
+                model.getMessages().add("Server " + model.getServer() + ":" + model.getPort() + " is no longer available.");
+                client.stop();
+                try {
+                    client.dispose();
+                } catch (IOException ignored) {
+                    // OK
+                }
+                model.setClient(null);
+                model.setConnected(false);
+                model.getMessages().clear();
+            }
+        });
     }
 }

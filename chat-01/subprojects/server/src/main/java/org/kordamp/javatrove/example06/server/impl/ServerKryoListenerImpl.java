@@ -20,6 +20,7 @@ package org.kordamp.javatrove.example06.server.impl;
 
 import com.esotericsoftware.kryonet.Connection;
 import org.kordamp.javatrove.example06.Command;
+import org.kordamp.javatrove.example06.LogoutCommand;
 import org.kordamp.javatrove.example06.server.ServerCommandDispatcher;
 
 import javax.inject.Inject;
@@ -30,6 +31,14 @@ import javax.inject.Inject;
 public class ServerKryoListenerImpl extends ServerKryoListener {
     @Inject
     private ServerCommandDispatcher serverCommandDispatcher;
+
+    @Override
+    public void disconnected(Connection connection) {
+        NamedConnection namedConnection = (NamedConnection) connection;
+        serverCommandDispatcher.dispatch(server, namedConnection, LogoutCommand.builder()
+            .name(namedConnection.getName())
+            .build());
+    }
 
     @Override
     public final void received(Connection connection, Object object) {

@@ -22,7 +22,6 @@ import com.esotericsoftware.kryonet.Client;
 import com.google.inject.Injector;
 import org.jdeferred.DeferredManager;
 import org.kordamp.javatrove.example06.LoginCommand;
-import org.kordamp.javatrove.example06.LogoutCommand;
 import org.kordamp.javatrove.example06.MessageCommand;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 import org.kordamp.javatrove.example06.client.util.ApplicationEventBus;
@@ -30,6 +29,7 @@ import org.kordamp.javatrove.example06.client.util.ThrowableEvent;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author Andres Almiray
@@ -42,14 +42,13 @@ public class AppController {
     @Inject
     private Injector injector;
 
-    private Client client;
-
     public void login() {
         deferredManager.when(() -> {
             try {
-                client = injector.getInstance(Client.class);
+                Client client = injector.getInstance(Client.class);
                 client.connect(5000, model.getServer(), model.getPort());
                 client.sendTCP(LoginCommand.builder().name(model.getName()).build());
+                model.setClient(client);
             } catch (IOException e) {
                 throw new IllegalStateException(e);
             }
@@ -59,29 +58,29 @@ public class AppController {
 
     public void logout() {
         deferredManager.when(() -> {
-            try {
-                client.sendTCP(LogoutCommand.builder().name(model.getName()).build());
-                client.stop();
-                client.dispose();
-                client = null;
-                model.getMessages().clear();
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
-            }
+            Optional<Client> client = model.getClient();
+            model.setClient(null);
+            client.ifPresent(c -> {
+                try {
+                    c.stop();
+                    c.dispose();
+                } catch (Exception e) {
+                    throw new IllegalStateException(e);
+                }
+            });
         }).fail(this::handleException)
-            .then((Void result) -> model.setConnected(false));
+            .then((Void result) -> {
+                model.setConnected(false);
+                model.getMessages().clear();
+            });
     }
 
     public void send() {
         deferredManager.when(() -> {
-            try {
-                String message = model.getMessage();
-                model.setMessage("");
-                client.sendTCP(MessageCommand.builder().message(message).build());
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
-            }
-        }).fail(this::handleException);
+            String message = model.getMessage();
+            model.setMessage("");
+            model.getClient().ifPresent(c -> c.sendTCP(MessageCommand.builder().message(message).build()));
+        });
     }
 
     private void handleException(Throwable throwable) {
