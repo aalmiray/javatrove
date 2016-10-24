@@ -19,7 +19,8 @@
 package org.kordamp.javatrove.example06.client.impl;
 
 import com.esotericsoftware.kryonet.Client;
-import org.kordamp.javatrove.example06.Command;
+import org.kordamp.javatrove.example06.LoginCommand;
+import org.kordamp.javatrove.example06.MessageCommand;
 import org.kordamp.javatrove.example06.client.ChatClient;
 
 import javax.inject.Inject;
@@ -33,16 +34,17 @@ public class ChatClientImpl implements ChatClient {
     private Client client;
 
     @Override
-    public void connect(int timeout, String server, int port) {
+    public void login(int timeout, String server, int port, String name) {
         try {
             client.connect(timeout, server, port);
+            client.sendTCP(LoginCommand.builder().name(name).build());
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public void disconnect() {
+    public void logout() {
         try {
             client.stop();
             client.dispose();
@@ -52,7 +54,7 @@ public class ChatClientImpl implements ChatClient {
     }
 
     @Override
-    public <T extends Command> void send(T command) {
-        client.sendTCP(command);
+    public void send(String message) {
+        client.sendTCP(MessageCommand.builder().message(message).build());
     }
 }

@@ -27,12 +27,12 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
-import org.kordamp.javatrove.example06.ChatUtil;
 import org.kordamp.javatrove.example06.client.ChatClient;
 
 import java.util.Optional;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import static org.kordamp.javatrove.example06.ChatUtil.SERVER_PORT;
 
 /**
  * @author Andres Almiray
@@ -71,7 +71,7 @@ public class AppModel {
 
     public IntegerProperty portProperty() {
         if (port == null) {
-            port = new SimpleIntegerProperty(this, "port", ChatUtil.SERVER_PORT);
+            port = new SimpleIntegerProperty(this, "port", SERVER_PORT);
         }
         return port;
     }

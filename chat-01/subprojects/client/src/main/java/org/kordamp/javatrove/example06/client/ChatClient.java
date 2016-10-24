@@ -18,15 +18,13 @@
  */
 package org.kordamp.javatrove.example06.client;
 
-import org.kordamp.javatrove.example06.Command;
-
 /**
  * @author Andres Almiray
  */
 public interface ChatClient {
-    void connect(int timeout, String server, int port);
+    void login(int timeout, String server, int port, String name);
 
-    void disconnect();
+    void logout();
 
-    <T extends Command> void send(T command);
+    void send(String message);
 }

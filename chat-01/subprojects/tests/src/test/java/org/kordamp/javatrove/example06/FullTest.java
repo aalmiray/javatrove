@@ -108,20 +108,19 @@ public class FullTest {
         client = injector.getInstance(ChatClient.class);
 
         // when:
-        client.connect(5000, "localhost", ChatUtil.SERVER_PORT);
-        client.send(LoginCommand.builder().name("Bob").build());
+        client.login(5000, "localhost", ChatUtil.SERVER_PORT, "Bob");
 
         // then:
         testfx.waitFor("#messages", containsText("Alice> hello"), 200);
 
         // when:
-        client.send(MessageCommand.builder().message("howdy!").build());
+        client.send("howdy!");
 
         // then:
         testfx.waitFor("#messages", containsText("Bob> howdy!"), 200);
 
         // when:
-        client.disconnect();
+        client.logout();
 
         // then:
         testfx.waitFor("#messages", containsText("Bob disconnected"), 200);
