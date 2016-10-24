@@ -21,6 +21,7 @@ package org.kordamp.javatrove.example06.client;
 import com.esotericsoftware.kryonet.Client;
 import org.jdeferred.DeferredManager;
 import org.kordamp.javatrove.example06.client.controller.AppController;
+import org.kordamp.javatrove.example06.client.impl.ChatClientImpl;
 import org.kordamp.javatrove.example06.client.impl.ClientCommandDispatcherImpl;
 import org.kordamp.javatrove.example06.client.impl.ClientDisconnectCommandHandler;
 import org.kordamp.javatrove.example06.client.impl.ClientKryoListener;
@@ -56,6 +57,7 @@ public class AppModule extends ExtAnnotationsModule {
         bindExecutorService();
         bindClient();
         bindClientListener();
+        bindChatClient();
         bindCommandDispatcher();
         bindLoginCommandHandler();
         bindLogoutCommandHandler();
@@ -77,6 +79,11 @@ public class AppModule extends ExtAnnotationsModule {
     protected void bindClient() {
         bind(Client.class)
             .toProvider(ClientProvider.class);
+    }
+
+    protected void bindChatClient() {
+        bind(ChatClient.class)
+            .to(ChatClientImpl.class);
     }
 
     protected void bindClientListener() {

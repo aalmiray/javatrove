@@ -29,6 +29,7 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.client.ChatClient;
 
 import java.util.Optional;
 
@@ -48,9 +49,9 @@ public class AppModel {
     private BooleanProperty connected;
 
     @Setter
-    private Client client;
+    private ChatClient client;
 
-    public Optional<Client> getClient() {
+    public Optional<ChatClient> getClient() {
         return Optional.ofNullable(client);
     }
 

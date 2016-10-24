@@ -20,12 +20,13 @@ package org.kordamp.javatrove.example06.server;
 
 import com.esotericsoftware.kryonet.Server;
 import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.server.impl.ChatServerImpl;
 import org.kordamp.javatrove.example06.server.impl.ServerCommandDispatcherImpl;
+import org.kordamp.javatrove.example06.server.impl.ServerKryoListener;
+import org.kordamp.javatrove.example06.server.impl.ServerKryoListenerImpl;
 import org.kordamp.javatrove.example06.server.impl.ServerLoginCommandHandler;
 import org.kordamp.javatrove.example06.server.impl.ServerLogoutCommandHandler;
 import org.kordamp.javatrove.example06.server.impl.ServerMessageCommandHandler;
-import org.kordamp.javatrove.example06.server.impl.ServerKryoListener;
-import org.kordamp.javatrove.example06.server.impl.ServerKryoListenerImpl;
 import org.kordamp.javatrove.example06.server.impl.ServerProvider;
 import ru.vyarus.guice.ext.ExtAnnotationsModule;
 
@@ -47,6 +48,7 @@ public class ServerModule extends ExtAnnotationsModule {
         bindServerPort();
         bindServer();
         bindServerListener();
+        bindChatServer();
         bindCommandDispatcher();
         bindLoginCommandHandler();
         bindLogoutCommandHandler();
@@ -68,6 +70,12 @@ public class ServerModule extends ExtAnnotationsModule {
     protected void bindServerListener() {
         bind(ServerKryoListener.class)
             .to(ServerKryoListenerImpl.class)
+            .in(Singleton.class);
+    }
+
+    protected void bindChatServer() {
+        bind(ChatServer.class)
+            .to(ChatServerImpl.class)
             .in(Singleton.class);
     }
 

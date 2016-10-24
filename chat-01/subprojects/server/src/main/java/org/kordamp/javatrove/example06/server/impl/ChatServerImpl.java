@@ -16,32 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example06.server;
+package org.kordamp.javatrove.example06.server.impl;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.esotericsoftware.kryonet.Server;
+import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.server.ChatServer;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.IOException;
 
 /**
  * @author Andres Almiray
  */
-public class Main {
+public class ChatServerImpl implements ChatServer {
     @Inject
-    private ChatServer server;
+    @Named(KryoUtil.SERVER_PORT_KEY)
+    private int port;
 
-    public static void main(String[] args) throws Exception {
-        Injector injector = Guice.createInjector(new ServerModule());
-        Main main = new Main();
-        injector.injectMembers(main);
-        main.run();
+    @Inject
+    private Server server;
+
+    @Override
+    public void start() {
+        try {
+            server.bind(port);
+            server.start();
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
-    private Main() {
-
-    }
-
-    public void run() {
-        server.start();
+    @Override
+    public void stop() {
+        server.stop();
     }
 }

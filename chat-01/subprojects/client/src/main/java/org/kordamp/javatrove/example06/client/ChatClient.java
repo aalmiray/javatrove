@@ -16,32 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.example06.server;
+package org.kordamp.javatrove.example06.client;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import javax.inject.Inject;
+import org.kordamp.javatrove.example06.Command;
 
 /**
  * @author Andres Almiray
  */
-public class Main {
-    @Inject
-    private ChatServer server;
+public interface ChatClient {
+    void connect(int timeout, String server, int port);
 
-    public static void main(String[] args) throws Exception {
-        Injector injector = Guice.createInjector(new ServerModule());
-        Main main = new Main();
-        injector.injectMembers(main);
-        main.run();
-    }
+    void disconnect();
 
-    private Main() {
-
-    }
-
-    public void run() {
-        server.start();
-    }
+    <T extends Command> void send(T command);
 }

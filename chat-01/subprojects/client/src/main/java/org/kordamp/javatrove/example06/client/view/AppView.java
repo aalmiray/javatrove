@@ -80,6 +80,7 @@ public class AppView {
         }
 
         content = new StyleClassedTextArea();
+        content.setId("messages");
         content.setEditable(false);
 
         ObservableList<String> messages = createJavaFXThreadProxyList(model.getMessages());

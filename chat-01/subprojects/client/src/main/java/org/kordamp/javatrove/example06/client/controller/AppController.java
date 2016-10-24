@@ -18,17 +18,16 @@
  */
 package org.kordamp.javatrove.example06.client.controller;
 
-import com.esotericsoftware.kryonet.Client;
 import com.google.inject.Injector;
 import org.jdeferred.DeferredManager;
 import org.kordamp.javatrove.example06.LoginCommand;
 import org.kordamp.javatrove.example06.MessageCommand;
+import org.kordamp.javatrove.example06.client.ChatClient;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 import org.kordamp.javatrove.example06.client.util.ApplicationEventBus;
 import org.kordamp.javatrove.example06.client.util.ThrowableEvent;
 
 import javax.inject.Inject;
-import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -44,30 +43,20 @@ public class AppController {
 
     public void login() {
         deferredManager.when(() -> {
-            try {
-                Client client = injector.getInstance(Client.class);
-                client.connect(5000, model.getServer(), model.getPort());
-                client.sendTCP(LoginCommand.builder().name(model.getName()).build());
-                model.setClient(client);
-            } catch (IOException e) {
-                throw new IllegalStateException(e);
-            }
+            ChatClient client = injector.getInstance(ChatClient.class);
+            client.connect(5000, model.getServer(), model.getPort());
+            client.send(LoginCommand.builder().name(model.getName()).build());
+            model.setClient(client);
+
         }).fail(this::handleException)
             .then((Void result) -> model.setConnected(true));
     }
 
     public void logout() {
         deferredManager.when(() -> {
-            Optional<Client> client = model.getClient();
+            Optional<ChatClient> client = model.getClient();
             model.setClient(null);
-            client.ifPresent(c -> {
-                try {
-                    c.stop();
-                    c.dispose();
-                } catch (Exception e) {
-                    throw new IllegalStateException(e);
-                }
-            });
+            client.ifPresent(ChatClient::disconnect);
         }).fail(this::handleException)
             .then((Void result) -> {
                 model.setConnected(false);
@@ -79,7 +68,7 @@ public class AppController {
         deferredManager.when(() -> {
             String message = model.getMessage();
             model.setMessage("");
-            model.getClient().ifPresent(c -> c.sendTCP(MessageCommand.builder().message(message).build()));
+            model.getClient().ifPresent(c -> c.send(MessageCommand.builder().message(message).build()));
         });
     }
 

@@ -18,30 +18,11 @@
  */
 package org.kordamp.javatrove.example06.server;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import javax.inject.Inject;
-
 /**
  * @author Andres Almiray
  */
-public class Main {
-    @Inject
-    private ChatServer server;
+public interface ChatServer {
+    void start();
 
-    public static void main(String[] args) throws Exception {
-        Injector injector = Guice.createInjector(new ServerModule());
-        Main main = new Main();
-        injector.injectMembers(main);
-        main.run();
-    }
-
-    private Main() {
-
-    }
-
-    public void run() {
-        server.start();
-    }
+    void stop();
 }
