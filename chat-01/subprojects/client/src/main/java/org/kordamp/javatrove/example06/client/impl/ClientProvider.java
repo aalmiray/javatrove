@@ -19,7 +19,7 @@
 package org.kordamp.javatrove.example06.client.impl;
 
 import com.esotericsoftware.kryonet.Client;
-import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.ChatUtil;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -35,7 +35,7 @@ public class ClientProvider implements Provider<Client> {
         Client client = new Client();
         clientKryoListener.setClient(client);
         client.start();
-        KryoUtil.registerClasses(client);
+        ChatUtil.registerClasses(client);
         client.addListener(clientKryoListener);
         return client;
     }

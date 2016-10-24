@@ -19,9 +19,8 @@
 package org.kordamp.javatrove.example06.server.impl;
 
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.ChatUtil;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -41,7 +40,7 @@ public class ServerProvider implements Provider<Server> {
                 return new NamedConnection();
             }
         };
-        KryoUtil.registerClasses(server);
+        ChatUtil.registerClasses(server);
         serverKryoListener.setServer(server);
         server.addListener(serverKryoListener);
         return server;

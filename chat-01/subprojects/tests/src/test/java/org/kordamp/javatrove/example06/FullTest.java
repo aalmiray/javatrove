@@ -108,7 +108,7 @@ public class FullTest {
         client = injector.getInstance(ChatClient.class);
 
         // when:
-        client.connect(5000, "localhost", KryoUtil.SERVER_PORT);
+        client.connect(5000, "localhost", ChatUtil.SERVER_PORT);
         client.send(LoginCommand.builder().name("Bob").build());
 
         // then:

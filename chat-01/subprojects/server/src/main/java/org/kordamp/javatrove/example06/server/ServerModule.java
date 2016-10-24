@@ -19,7 +19,7 @@
 package org.kordamp.javatrove.example06.server;
 
 import com.esotericsoftware.kryonet.Server;
-import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.ChatUtil;
 import org.kordamp.javatrove.example06.server.impl.ChatServerImpl;
 import org.kordamp.javatrove.example06.server.impl.ServerCommandDispatcherImpl;
 import org.kordamp.javatrove.example06.server.impl.ServerKryoListener;
@@ -57,8 +57,8 @@ public class ServerModule extends ExtAnnotationsModule {
 
     protected void bindServerPort() {
         bindConstant()
-            .annotatedWith(named(KryoUtil.SERVER_PORT_KEY))
-            .to(KryoUtil.SERVER_PORT);
+            .annotatedWith(named(ChatUtil.SERVER_PORT_KEY))
+            .to(ChatUtil.SERVER_PORT);
     }
 
     protected void bindServer() {

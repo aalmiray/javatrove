@@ -37,7 +37,7 @@ import javafx.util.StringConverter;
 import org.fxmisc.easybind.EasyBind;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.StyleClassedTextArea;
-import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.ChatUtil;
 import org.kordamp.javatrove.example06.client.controller.AppController;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 import org.reactfx.EventStreams;
@@ -47,7 +47,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import static java.util.Objects.requireNonNull;
-import static org.kordamp.javatrove.example06.KryoUtil.NAME_SEPARATOR;
+import static org.kordamp.javatrove.example06.ChatUtil.NAME_SEPARATOR;
 
 /**
  * @author Andres Almiray
@@ -107,8 +107,8 @@ public class AppView {
                     }
                     return i;
                 } catch (Exception e) {
-                    port.setText("" + KryoUtil.SERVER_PORT);
-                    return KryoUtil.SERVER_PORT;
+                    port.setText("" + ChatUtil.SERVER_PORT);
+                    return ChatUtil.SERVER_PORT;
                 }
             }
         });

@@ -23,7 +23,7 @@ import org.kordamp.javatrove.example06.Command;
 import org.kordamp.javatrove.example06.MessageCommand;
 import org.kordamp.javatrove.example06.server.ServerCommandHandler;
 
-import static org.kordamp.javatrove.example06.KryoUtil.NAME_SEPARATOR;
+import static org.kordamp.javatrove.example06.ChatUtil.NAME_SEPARATOR;
 
 /**
  * @author Andres Almiray

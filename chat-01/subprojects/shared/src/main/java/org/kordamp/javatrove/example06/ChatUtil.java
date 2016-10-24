@@ -24,7 +24,7 @@ import com.esotericsoftware.kryonet.EndPoint;
 /**
  * @author Andres Almiray
  */
-public class KryoUtil {
+public class ChatUtil {
     public static final String SERVER_PORT_KEY = "_SERVER_PORT_";
     public static final int SERVER_PORT = 54555;
     public static final String NAME_SEPARATOR = ">";

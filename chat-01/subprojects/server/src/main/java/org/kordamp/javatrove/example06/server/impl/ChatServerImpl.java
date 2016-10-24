@@ -19,7 +19,7 @@
 package org.kordamp.javatrove.example06.server.impl;
 
 import com.esotericsoftware.kryonet.Server;
-import org.kordamp.javatrove.example06.KryoUtil;
+import org.kordamp.javatrove.example06.ChatUtil;
 import org.kordamp.javatrove.example06.server.ChatServer;
 
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 public class ChatServerImpl implements ChatServer {
     @Inject
-    @Named(KryoUtil.SERVER_PORT_KEY)
+    @Named(ChatUtil.SERVER_PORT_KEY)
     private int port;
 
     @Inject
