@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2016 Andres Almiray
+
+    This file is part of Java Trove Examples
+
+    Java Trove Examples is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Java Trove Examples is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import org.tbee.javafx.scene.layout.fxml.MigPane?>
+<MigPane xmlns:fx="http://javafx.com/fxml"
+         prefWidth="400"
+         layout="fill, wrap 3" cols="[20%][40%][40%]"
+         fx:controller="org.kordamp.javatrove.example07.client.view.AppView">
+    <Label text="Server:"/>
+    <TextField fx:id="server" MigPane.cc="growx, span 2"/>
+    <Label text="Port:"/>
+    <TextField fx:id="port" MigPane.cc="growx, span 2"/>
+    <Label text="Name:"/>
+    <TextField fx:id="name" MigPane.cc="growx, span 2"/>
+
+    <Label/> <!--spacer -->
+    <Button fx:id="loginButton" text="Login" onAction="#login"
+            MigPane.cc="center, growx"
+            styleClass="btn, btn-primary">
+        <graphic>
+            <FontIcon iconLiteral="fa-sign-in"/>
+        </graphic>
+    </Button>
+    <Button fx:id="logoutButton" text="Logout" onAction="#logout"
+            MigPane.cc="center, growx"
+            styleClass="btn, btn-danger">
+        <graphic>
+            <FontIcon iconLiteral="fa-sign-out"/>
+        </graphic>
+    </Button>
+
+    <VBox fx:id="placeholder" MigPane.cc="span 3, grow" prefHeight="300"/>
+
+    <TextField fx:id="message" MigPane.cc="span 2, growx"/>
+    <Button fx:id="sendButton" text="Send" onAction="#send"
+            MigPane.cc="center, growx"
+            styleClass="btn, btn-info"/>
+</MigPane>

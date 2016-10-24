@@ -1,0 +1,69 @@
+/*
+ * Copyright 2016 Andres Almiray
+ *
+ * This file is part of Java Trove Examples
+ *
+ * Java Trove Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Java Trove Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+    }
+}
+
+apply plugin: 'com.google.protobuf'
+
+dependencies {
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+    compile "io.grpc:grpc-netty:${grpcVersion}"
+    compile "io.grpc:grpc-protobuf:${grpcVersion}"
+    compile "io.grpc:grpc-stub:${grpcVersion}"
+    compile("com.google.protobuf:protobuf-java-util:${protobufVersion}") {
+        exclude group: 'com.google.guava', module: 'guava'
+    }
+}
+
+idea {
+    module {
+        generatedSourceDirs += file("${buildDir}/generated/main/java")
+        generatedSourceDirs += file("${buildDir}/generated/main/grpc")
+    }
+}
+
+protobuf {
+    generatedFilesBaseDir = file("${buildDir}/generated")
+
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                outputSubDir = 'grpc'
+            }
+        }
+    }
+}

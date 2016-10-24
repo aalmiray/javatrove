@@ -1,0 +1,38 @@
+/*
+ * Copyright 2016 Andres Almiray
+ *
+ * This file is part of Java Trove Examples
+ *
+ * Java Trove Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Java Trove Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+File subdir = new File(rootDir, 'subprojects')
+subdir.eachDir { dir ->
+    File buildFile = new File(dir, "${dir.name}.gradle")
+    if (buildFile.exists()) {
+        include "subprojects/${dir.name}"
+    }
+}
+
+rootProject.name = 'chat-02'
+rootProject.children.each { project ->
+    int slash = project.name.indexOf('/')
+    String fileBaseName = project.name[(slash + 1)..-1]
+    String projectDirName = project.name
+    project.name = fileBaseName
+    project.projectDir = new File(settingsDir, projectDirName)
+    project.buildFileName = "${fileBaseName}.gradle"
+    assert project.projectDir.isDirectory()
+    assert project.buildFile.isFile()
+}

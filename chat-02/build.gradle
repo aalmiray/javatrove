@@ -1,0 +1,78 @@
+/*
+ * Copyright 2016 Andres Almiray
+ *
+ * This file is part of Java Trove Examples
+ *
+ * Java Trove Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Java Trove Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'com.github.ben-manes.versions' version '0.13.0' apply false
+    id 'com.github.hierynomus.license' version '0.11.0' apply false
+    id 'org.kordamp.gradle.stats' version '0.2.0' apply false
+}
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'com.github.ben-manes.versions'
+
+    repositories {
+        jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'com.github.hierynomus.license'
+    apply plugin: 'org.kordamp.gradle.stats'
+
+    license {
+        header = rootProject.file('gradle/HEADER')
+        strictCheck = true
+        ignoreFailures = true
+        mapping {
+            java = 'SLASHSTAR_STYLE'
+            fxml = 'XML_STYLE'
+        }
+        ext.year    = '2016'
+        ext.author  = 'Andres Almiray'
+        ext.project = 'Java Trove Examples'
+    }
+}
+
+idea {
+    project {
+        jdkName "1.8"
+        languageLevel "1.8"
+        ipr {
+            withXml { provider ->
+                def node = provider.asNode()
+                node.component.find { it.'@name' == 'VcsDirectoryMappings' }?.mapping[0].'@vcs' = 'Git'
+
+                def compilerConfiguration = node.component.find { it.'@name' == 'CompilerConfiguration' }
+                compilerConfiguration.remove(compilerConfiguration.annotationProcessing)
+                compilerConfiguration.append(new XmlParser().parseText("""
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>"""))
+            }
+        }
+    }
+}
+
+//evaluationDependsOnChildren()
+
+task aggregateStatsReport(type: org.kordamp.gradle.stats.AggregateStatsReportTask) {}
