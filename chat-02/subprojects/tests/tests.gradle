@@ -17,10 +17,7 @@
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'application'
 apply plugin: 'jacoco'
-
-mainClassName = 'org.kordamp.javatrove.example06.client.Main'
 
 jacoco {
     toolVersion = '0.7.7.201606060606'
