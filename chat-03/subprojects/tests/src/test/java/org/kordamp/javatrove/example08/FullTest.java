@@ -21,6 +21,7 @@ package org.kordamp.javatrove.example08;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kordamp.javatrove.example08.client.AppModule;
@@ -60,6 +61,7 @@ public class FullTest {
     }
 
     @Test
+    @Ignore
     public void _02_login_without_server_results_in_error() {
         //when:
         testfx.clickOn("#name").write("Alice");

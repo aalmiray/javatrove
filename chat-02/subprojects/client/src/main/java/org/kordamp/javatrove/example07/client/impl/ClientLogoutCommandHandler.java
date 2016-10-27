@@ -19,11 +19,12 @@
 package org.kordamp.javatrove.example07.client.impl;
 
 import org.kordamp.javatrove.example07.Command;
-import org.kordamp.javatrove.example07.LogoutCommand;
 import org.kordamp.javatrove.example07.client.ClientCommandHandler;
 import org.kordamp.javatrove.example07.client.model.AppModel;
 
 import javax.inject.Inject;
+
+import static org.kordamp.javatrove.example07.Command.Type.LOGOUT;
 
 /**
  * @author Andres Almiray
@@ -34,13 +35,12 @@ public class ClientLogoutCommandHandler implements ClientCommandHandler {
     @Inject private AppModel model;
 
     @Override
-    public <C extends Command> boolean supports(C command) {
-        return command instanceof LogoutCommand;
+    public boolean supports(Command.Type commandType) {
+        return commandType == LOGOUT;
     }
 
     @Override
-    public <C extends Command> void handle(C command) {
-        LogoutCommand logoutCommand = (LogoutCommand) command;
-        model.getMessages().add(logoutCommand.getName() + " disconnected.");
+    public void handle(Command command) {
+        model.getMessages().add(command.getPayload() + " disconnected.");
     }
 }

@@ -24,7 +24,7 @@ import org.kordamp.javatrove.example07.Command;
  * @author Andres Almiray
  */
 public interface ClientCommandHandler {
-    <C extends Command> boolean supports(C command);
+    boolean supports(Command.Type commandType);
 
-    <C extends Command> void handle(C command);
+    void handle(Command command);
 }

@@ -30,9 +30,9 @@ import javax.inject.Inject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.kordamp.javatrove.example08.Command.Type.LOGIN;
-import static org.kordamp.javatrove.example08.Command.Type.LOGOUT;
-import static org.kordamp.javatrove.example08.Command.Type.MESSAGE;
+import static org.kordamp.javatrove.example08.ChatUtil.loginCommand;
+import static org.kordamp.javatrove.example08.ChatUtil.logoutCommand;
+import static org.kordamp.javatrove.example08.ChatUtil.messageCommand;
 import static org.zeromq.ZMQ.NOBLOCK;
 
 /**
@@ -69,11 +69,8 @@ public class ChatClientImpl implements ChatClient {
             running.set(true);
             executorService.submit(this::handleIncomingMessages);
 
-            client.send(objectMapper.writeValueAsBytes(Command.builder()
-                .type(LOGIN)
-                .payload(name)
-                .build()));
-            client.recv(NOBLOCK);
+            client.send(objectMapper.writeValueAsBytes(loginCommand(name)));
+            client.recv(0);
         } catch (Exception e) {
             LOG.error(UNEXPECTED_ERROR, e);
             throw new IllegalStateException(e);
@@ -96,11 +93,8 @@ public class ChatClientImpl implements ChatClient {
     @Override
     public void logout(String name) {
         try {
-            client.send(objectMapper.writeValueAsBytes(Command.builder()
-                .type(LOGOUT)
-                .payload(name)
-                .build()));
-            client.recv(NOBLOCK);
+            client.send(objectMapper.writeValueAsBytes(logoutCommand(name)));
+            client.recv(0);
         } catch (Exception e) {
             LOG.error(UNEXPECTED_ERROR, e);
         }
@@ -110,11 +104,8 @@ public class ChatClientImpl implements ChatClient {
     @Override
     public void send(String message) {
         try {
-            client.send(objectMapper.writeValueAsBytes(Command.builder()
-                .type(MESSAGE)
-                .payload(message)
-                .build()));
-            client.recv(NOBLOCK);
+            client.send(objectMapper.writeValueAsBytes(messageCommand(message)));
+            client.recv(0);
         } catch (Exception e) {
             LOG.error(UNEXPECTED_ERROR, e);
             terminate();

@@ -18,6 +18,10 @@
  */
 package org.kordamp.javatrove.example08;
 
+import static org.kordamp.javatrove.example08.Command.Type.LOGIN;
+import static org.kordamp.javatrove.example08.Command.Type.LOGOUT;
+import static org.kordamp.javatrove.example08.Command.Type.MESSAGE;
+
 /**
  * @author Andres Almiray
  */
@@ -25,4 +29,25 @@ public class ChatUtil {
     public static final String SERVER_PORT_KEY = "_SERVER_PORT_";
     public static final int SERVER_PORT = 54555;
     public static final String NAME_SEPARATOR = ">";
+
+    public static Command loginCommand(String name) {
+        return Command.builder()
+            .type(LOGIN)
+            .payload(name)
+            .build();
+    }
+
+    public static Command logoutCommand(String name) {
+        return Command.builder()
+            .type(LOGOUT)
+            .payload(name)
+            .build();
+    }
+
+    public static Command messageCommand(String message) {
+        return Command.builder()
+            .type(MESSAGE)
+            .payload(message)
+            .build();
+    }
 }

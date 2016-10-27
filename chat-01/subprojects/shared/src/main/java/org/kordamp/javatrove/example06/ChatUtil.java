@@ -21,6 +21,11 @@ package org.kordamp.javatrove.example06;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
+import static org.kordamp.javatrove.example06.Command.Type.DISCONNECT;
+import static org.kordamp.javatrove.example06.Command.Type.LOGIN;
+import static org.kordamp.javatrove.example06.Command.Type.LOGOUT;
+import static org.kordamp.javatrove.example06.Command.Type.MESSAGE;
+
 /**
  * @author Andres Almiray
  */
@@ -33,5 +38,32 @@ public class ChatUtil {
         Kryo kryo = endPoint.getKryo();
         kryo.register(Command.class);
         kryo.register(Command.Type.class);
+    }
+
+    public static Command loginCommand(String name) {
+        return Command.builder()
+            .type(LOGIN)
+            .payload(name)
+            .build();
+    }
+
+    public static Command logoutCommand(String name) {
+        return Command.builder()
+            .type(LOGOUT)
+            .payload(name)
+            .build();
+    }
+
+    public static Command messageCommand(String message) {
+        return Command.builder()
+            .type(MESSAGE)
+            .payload(message)
+            .build();
+    }
+
+    public static Command disconnectCommand() {
+        return Command.builder()
+            .type(DISCONNECT)
+            .build();
     }
 }

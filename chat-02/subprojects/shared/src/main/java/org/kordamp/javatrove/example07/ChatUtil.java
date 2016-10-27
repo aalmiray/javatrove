@@ -21,6 +21,11 @@ package org.kordamp.javatrove.example07;
 import javax.annotation.Nonnull;
 import java.security.MessageDigest;
 
+import static org.kordamp.javatrove.example07.Command.Type.DISCONNECT;
+import static org.kordamp.javatrove.example07.Command.Type.LOGIN;
+import static org.kordamp.javatrove.example07.Command.Type.LOGOUT;
+import static org.kordamp.javatrove.example07.Command.Type.MESSAGE;
+
 /**
  * @author Andres Almiray
  */
@@ -43,5 +48,32 @@ public class ChatUtil {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public static Command loginCommand(String name) {
+        return Command.builder()
+            .type(LOGIN)
+            .payload(name)
+            .build();
+    }
+
+    public static Command logoutCommand(String name) {
+        return Command.builder()
+            .type(LOGOUT)
+            .payload(name)
+            .build();
+    }
+
+    public static Command messageCommand(String message) {
+        return Command.builder()
+            .type(MESSAGE)
+            .payload(message)
+            .build();
+    }
+
+    public static Command disconnectCommand() {
+        return Command.builder()
+            .type(DISCONNECT)
+            .build();
     }
 }

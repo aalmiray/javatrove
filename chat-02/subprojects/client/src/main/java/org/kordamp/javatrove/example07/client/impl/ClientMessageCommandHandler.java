@@ -19,11 +19,12 @@
 package org.kordamp.javatrove.example07.client.impl;
 
 import org.kordamp.javatrove.example07.Command;
-import org.kordamp.javatrove.example07.MessageCommand;
 import org.kordamp.javatrove.example07.client.ClientCommandHandler;
 import org.kordamp.javatrove.example07.client.model.AppModel;
 
 import javax.inject.Inject;
+
+import static org.kordamp.javatrove.example07.Command.Type.MESSAGE;
 
 /**
  * @author Andres Almiray
@@ -34,13 +35,12 @@ public class ClientMessageCommandHandler implements ClientCommandHandler {
     @Inject private AppModel model;
 
     @Override
-    public <C extends Command> boolean supports(C command) {
-        return command instanceof MessageCommand;
+    public boolean supports(Command.Type commandType) {
+        return commandType == MESSAGE;
     }
 
     @Override
-    public <C extends Command> void handle(C command) {
-        MessageCommand messageCommand = (MessageCommand) command;
-        model.getMessages().add(messageCommand.getMessage());
+    public void handle(Command command) {
+        model.getMessages().add(command.getPayload());
     }
 }

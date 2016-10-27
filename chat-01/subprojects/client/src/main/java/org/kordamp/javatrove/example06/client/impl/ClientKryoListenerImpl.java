@@ -25,8 +25,8 @@ import org.kordamp.javatrove.example06.client.model.AppModel;
 
 import javax.inject.Inject;
 
-import static org.kordamp.javatrove.example06.Command.Type.DISCONNECT;
-import static org.kordamp.javatrove.example06.Command.Type.LOGIN;
+import static org.kordamp.javatrove.example06.ChatUtil.disconnectCommand;
+import static org.kordamp.javatrove.example06.ChatUtil.loginCommand;
 
 /**
  * @author Andres Almiray
@@ -37,10 +37,7 @@ public class ClientKryoListenerImpl extends ClientKryoListener {
 
     @Override
     public void connected(Connection connection) {
-        clientCommandDispatcher.dispatch(client, connection, Command.builder()
-            .type(LOGIN)
-            .payload(model.getName())
-            .build());
+        clientCommandDispatcher.dispatch(client, connection, loginCommand(model.getName()));
     }
 
     @Override
@@ -53,8 +50,6 @@ public class ClientKryoListenerImpl extends ClientKryoListener {
 
     @Override
     public void disconnected(Connection connection) {
-        clientCommandDispatcher.dispatch(client, connection, Command.builder()
-            .type(DISCONNECT)
-            .build());
+        clientCommandDispatcher.dispatch(client, connection, disconnectCommand());
     }
 }

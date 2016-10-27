@@ -24,7 +24,7 @@ import org.kordamp.javatrove.example06.server.ServerCommandDispatcher;
 
 import javax.inject.Inject;
 
-import static org.kordamp.javatrove.example06.Command.Type.LOGOUT;
+import static org.kordamp.javatrove.example06.ChatUtil.logoutCommand;
 
 /**
  * @author Andres Almiray
@@ -36,10 +36,7 @@ public class ServerKryoListenerImpl extends ServerKryoListener {
     @Override
     public void disconnected(Connection connection) {
         NamedConnection namedConnection = (NamedConnection) connection;
-        serverCommandDispatcher.dispatch(server, namedConnection, Command.builder()
-            .type(LOGOUT)
-            .payload(namedConnection.getName())
-            .build());
+        serverCommandDispatcher.dispatch(server, namedConnection, logoutCommand(namedConnection.getName()));
     }
 
     @Override

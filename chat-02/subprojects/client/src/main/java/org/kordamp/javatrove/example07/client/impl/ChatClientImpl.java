@@ -23,9 +23,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import org.kordamp.javatrove.example07.Command;
-import org.kordamp.javatrove.example07.LoginCommand;
-import org.kordamp.javatrove.example07.LogoutCommand;
-import org.kordamp.javatrove.example07.MessageCommand;
 import org.kordamp.javatrove.example07.client.ChatClient;
 import org.kordamp.javatrove.example07.client.ClientCommandDispatcher;
 import org.kordamp.javatrove.example07.client.util.ApplicationEventBus;
@@ -41,6 +38,9 @@ import javax.inject.Inject;
 import java.net.InetAddress;
 
 import static org.kordamp.javatrove.example07.ChatUtil.NAME_SEPARATOR;
+import static org.kordamp.javatrove.example07.ChatUtil.loginCommand;
+import static org.kordamp.javatrove.example07.ChatUtil.logoutCommand;
+import static org.kordamp.javatrove.example07.ChatUtil.messageCommand;
 import static org.kordamp.javatrove.example07.ChatUtil.toSHA1;
 
 /**
@@ -98,7 +98,7 @@ public class ChatClientImpl implements ChatClient {
             .build(), new StreamObserverAdapter<Empty>() {
             @Override
             public void onError(Throwable t) {
-
+                eventBus.publishAsync(new DisconnectEvent(t));
             }
         });
     }
@@ -106,11 +106,11 @@ public class ChatClientImpl implements ChatClient {
     private Command asCommand(Response value) {
         switch (value.getType()) {
             case LOGIN:
-                return LoginCommand.builder().name(value.getPayload()).build();
+                return loginCommand(value.getPayload());
             case LOGOUT:
-                return LogoutCommand.builder().name(value.getPayload()).build();
+                return logoutCommand(value.getPayload());
             case MESSAGE:
-                return MessageCommand.builder().message(value.getPayload()).build();
+                return messageCommand(value.getPayload());
         }
         return null;
     }
@@ -122,8 +122,8 @@ public class ChatClientImpl implements ChatClient {
         }
 
         @Override
-        public void onError(Throwable throwable) {
-            eventBus.publishAsync(new DisconnectEvent(throwable));
+        public void onError(Throwable t) {
+
         }
 
         @Override
