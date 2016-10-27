@@ -32,8 +32,6 @@ public class ChatUtil {
     public static void registerClasses(EndPoint endPoint) {
         Kryo kryo = endPoint.getKryo();
         kryo.register(Command.class);
-        kryo.register(LoginCommand.class);
-        kryo.register(LogoutCommand.class);
-        kryo.register(MessageCommand.class);
+        kryo.register(Command.Type.class);
     }
 }

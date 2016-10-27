@@ -55,7 +55,7 @@ public class ClientCommandDispatcherImpl implements ClientCommandDispatcher {
     @Override
     public void dispatch(Client client, Connection connection, Command command) {
         commandHandlers.stream()
-            .filter(handler -> handler.supports(command))
+            .filter(handler -> handler.supports(command.getType()))
             .forEach(handler -> handler.handle(client, connection, command));
     }
 }

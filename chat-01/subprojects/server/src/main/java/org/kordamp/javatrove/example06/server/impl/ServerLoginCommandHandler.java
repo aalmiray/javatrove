@@ -20,8 +20,9 @@ package org.kordamp.javatrove.example06.server.impl;
 
 import com.esotericsoftware.kryonet.Server;
 import org.kordamp.javatrove.example06.Command;
-import org.kordamp.javatrove.example06.LoginCommand;
 import org.kordamp.javatrove.example06.server.ServerCommandHandler;
+
+import static org.kordamp.javatrove.example06.Command.Type.LOGIN;
 
 /**
  * @author Andres Almiray
@@ -30,14 +31,13 @@ public class ServerLoginCommandHandler implements ServerCommandHandler {
     public static final String NAME = "_LOGIN_";
 
     @Override
-    public <C extends Command> boolean supports(C command) {
-        return command instanceof LoginCommand;
+    public boolean supports(Command.Type commandType) {
+        return commandType == LOGIN;
     }
 
     @Override
-    public <C extends Command> void handle(Server server, NamedConnection connection, C command) {
-        LoginCommand loginCommand = (LoginCommand) command;
-        connection.setName(loginCommand.getName());
+    public void handle(Server server, NamedConnection connection, Command command) {
+        connection.setName(command.getPayload());
         server.sendToAllExceptTCP(connection.getID(), command);
     }
 }

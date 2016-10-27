@@ -26,7 +26,7 @@ import org.kordamp.javatrove.example06.server.impl.NamedConnection;
  * @author Andres Almiray
  */
 public interface ServerCommandHandler {
-    <C extends Command> boolean supports(C command);
+    boolean supports(Command.Type commandType);
 
-    <C extends Command> void handle(Server server, NamedConnection connection, C command);
+    void handle(Server server, NamedConnection connection, Command command);
 }

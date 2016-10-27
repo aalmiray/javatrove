@@ -21,12 +21,13 @@ package org.kordamp.javatrove.example06.client.impl;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import org.kordamp.javatrove.example06.Command;
-import org.kordamp.javatrove.example06.DisconnectCommand;
 import org.kordamp.javatrove.example06.client.ClientCommandHandler;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 
 import javax.inject.Inject;
 import java.io.IOException;
+
+import static org.kordamp.javatrove.example06.Command.Type.DISCONNECT;
 
 /**
  * @author Andres Almiray
@@ -37,12 +38,12 @@ public class ClientDisconnectCommandHandler implements ClientCommandHandler {
     @Inject private AppModel model;
 
     @Override
-    public <C extends Command> boolean supports(C command) {
-        return command instanceof DisconnectCommand;
+    public boolean supports(Command.Type commandType) {
+        return commandType == DISCONNECT;
     }
 
     @Override
-    public <C extends Command> void handle(final Client client, Connection connection, C command) {
+    public void handle(final Client client, Connection connection, Command command) {
         model.getClient().ifPresent(c -> {
             if (c == client) {
                 model.getMessages().add("Server " + model.getServer() + ":" + model.getPort() + " is no longer available.");

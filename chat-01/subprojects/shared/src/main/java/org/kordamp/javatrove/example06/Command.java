@@ -18,8 +18,29 @@
  */
 package org.kordamp.javatrove.example06;
 
+import lombok.Builder;
+import lombok.Data;
+
 /**
  * @author Andres Almiray
  */
-public interface Command {
+@Data
+public class Command {
+    public enum Type {
+        LOGIN,
+        LOGOUT,
+        MESSAGE,
+        DISCONNECT;
+    }
+
+    private Type type;
+    private String payload;
+
+    @Builder
+    public static Command create(Type type, String payload) {
+        Command cmd = new Command();
+        cmd.setType(type);
+        cmd.setPayload(payload);
+        return cmd;
+    }
 }

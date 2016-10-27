@@ -20,12 +20,13 @@ package org.kordamp.javatrove.example06.client.impl;
 
 import com.esotericsoftware.kryonet.Connection;
 import org.kordamp.javatrove.example06.Command;
-import org.kordamp.javatrove.example06.DisconnectCommand;
-import org.kordamp.javatrove.example06.LoginCommand;
 import org.kordamp.javatrove.example06.client.ClientCommandDispatcher;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 
 import javax.inject.Inject;
+
+import static org.kordamp.javatrove.example06.Command.Type.DISCONNECT;
+import static org.kordamp.javatrove.example06.Command.Type.LOGIN;
 
 /**
  * @author Andres Almiray
@@ -36,8 +37,9 @@ public class ClientKryoListenerImpl extends ClientKryoListener {
 
     @Override
     public void connected(Connection connection) {
-        clientCommandDispatcher.dispatch(client, connection, LoginCommand.builder()
-            .name(model.getName())
+        clientCommandDispatcher.dispatch(client, connection, Command.builder()
+            .type(LOGIN)
+            .payload(model.getName())
             .build());
     }
 
@@ -51,6 +53,8 @@ public class ClientKryoListenerImpl extends ClientKryoListener {
 
     @Override
     public void disconnected(Connection connection) {
-        clientCommandDispatcher.dispatch(client, connection, new DisconnectCommand());
+        clientCommandDispatcher.dispatch(client, connection, Command.builder()
+            .type(DISCONNECT)
+            .build());
     }
 }

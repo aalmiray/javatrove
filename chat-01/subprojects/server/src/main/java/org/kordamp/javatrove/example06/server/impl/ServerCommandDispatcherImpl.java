@@ -54,7 +54,7 @@ public class ServerCommandDispatcherImpl implements ServerCommandDispatcher {
     @Override
     public void dispatch(Server server, NamedConnection connection, Command command) {
         commandHandlers.stream()
-            .filter(handler -> handler.supports(command))
+            .filter(handler -> handler.supports(command.getType()))
             .forEach(handler -> handler.handle(server, connection, command));
     }
 }

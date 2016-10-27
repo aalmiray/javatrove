@@ -21,11 +21,12 @@ package org.kordamp.javatrove.example06.client.impl;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import org.kordamp.javatrove.example06.Command;
-import org.kordamp.javatrove.example06.MessageCommand;
 import org.kordamp.javatrove.example06.client.ClientCommandHandler;
 import org.kordamp.javatrove.example06.client.model.AppModel;
 
 import javax.inject.Inject;
+
+import static org.kordamp.javatrove.example06.Command.Type.MESSAGE;
 
 /**
  * @author Andres Almiray
@@ -36,13 +37,12 @@ public class ClientMessageCommandHandler implements ClientCommandHandler {
     @Inject private AppModel model;
 
     @Override
-    public <C extends Command> boolean supports(C command) {
-        return command instanceof MessageCommand;
+    public boolean supports(Command.Type commandType) {
+        return commandType == MESSAGE;
     }
 
     @Override
-    public <C extends Command> void handle(Client client, Connection connection, C command) {
-        MessageCommand messageCommand = (MessageCommand) command;
-        model.getMessages().add(messageCommand.getMessage());
+    public void handle(Client client, Connection connection, Command command) {
+        model.getMessages().add(command.getPayload());
     }
 }
