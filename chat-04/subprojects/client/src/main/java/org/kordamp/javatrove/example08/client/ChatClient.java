@@ -26,5 +26,5 @@ public interface ChatClient {
 
     void logout(String name);
 
-    void send(String message);
+    void send(String name, String message);
 }

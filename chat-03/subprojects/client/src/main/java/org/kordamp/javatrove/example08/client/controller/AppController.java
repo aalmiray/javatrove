@@ -28,8 +28,6 @@ import org.kordamp.javatrove.example08.client.util.ThrowableEvent;
 import javax.inject.Inject;
 import java.util.Optional;
 
-import static org.kordamp.javatrove.example08.ChatUtil.NAME_SEPARATOR;
-
 /**
  * @author Andres Almiray
  */
@@ -45,7 +43,7 @@ public class AppController {
         deferredManager.when(() -> {
             ChatClient client = injector.getInstance(ChatClient.class);
             model.setClient(client);
-            client.login(5000, model.getServer(), model.getPort(), model.getName());
+            client.login(model.getServer(), model.getPort(), model.getName());
         }).fail(this::handleException)
             .then((Void result) -> model.setConnected(true));
     }
@@ -55,16 +53,14 @@ public class AppController {
             Optional<ChatClient> client = model.getClient();
             client.ifPresent(c -> c.logout(model.getName()));
         }).fail(this::handleException)
-            .always((state, result, rejected) -> {
-                disconnect();
-            });
+            .always((state, result, rejected) -> disconnect());
     }
 
     public void send() {
         deferredManager.when(() -> {
             String message = model.getMessage();
             model.setMessage("");
-            model.getClient().ifPresent(c -> c.send(model.getName() + NAME_SEPARATOR + " " + message));
+            model.getClient().ifPresent(c -> c.send(model.getName(), message));
         }).fail(throwable -> disconnect());
     }
 

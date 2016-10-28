@@ -22,8 +22,6 @@ import com.esotericsoftware.kryonet.Server;
 import org.kordamp.javatrove.example06.Command;
 import org.kordamp.javatrove.example06.server.ServerCommandHandler;
 
-import static org.kordamp.javatrove.example06.ChatUtil.NAME_SEPARATOR;
-import static org.kordamp.javatrove.example06.ChatUtil.messageCommand;
 import static org.kordamp.javatrove.example06.Command.Type.MESSAGE;
 
 /**
@@ -39,6 +37,6 @@ public class ServerMessageCommandHandler implements ServerCommandHandler {
 
     @Override
     public void handle(Server server, NamedConnection connection, Command command) {
-        server.sendToAllTCP(messageCommand(connection.getName() + NAME_SEPARATOR + " " + command.getPayload()));
+        server.sendToAllTCP(command);
     }
 }

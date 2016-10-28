@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
+import static org.kordamp.javatrove.example08.ChatUtil.NAME_SEPARATOR;
 import static org.kordamp.javatrove.example08.ChatUtil.loginCommand;
 import static org.kordamp.javatrove.example08.ChatUtil.logoutCommand;
 import static org.kordamp.javatrove.example08.ChatUtil.messageCommand;
@@ -74,8 +75,8 @@ public class ChatClientImpl implements ChatClient {
     }
 
     @Override
-    public void send(String message) {
-        channel.writeAndFlush(messageCommand(message));
+    public void send(String name, String message) {
+        channel.writeAndFlush(messageCommand(name + NAME_SEPARATOR + " " + message));
     }
 
     private void terminate() {

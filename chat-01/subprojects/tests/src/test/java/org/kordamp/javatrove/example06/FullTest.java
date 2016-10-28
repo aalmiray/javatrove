@@ -71,7 +71,7 @@ public class FullTest {
         testfx.clickOn("#loginButton");
 
         // then:
-        pause(200);
+        pause(500);
         testfx.waitUntil(testfx.window("Error"), isShowing(), 5);
         testfx.clickOn("OK");
     }
@@ -108,19 +108,19 @@ public class FullTest {
         client = injector.getInstance(ChatClient.class);
 
         // when:
-        client.login(5000, "localhost", ChatUtil.SERVER_PORT, "Bob");
+        client.login("localhost", ChatUtil.SERVER_PORT, "Bob");
 
         // then:
         testfx.waitFor("#messages", containsText("Alice> hello"), 200);
 
         // when:
-        client.send("howdy!");
+        client.send("Bob", "howdy!");
 
         // then:
         testfx.waitFor("#messages", containsText("Bob> howdy!"), 200);
 
         // when:
-        client.logout();
+        client.logout("Bob");
 
         // then:
         testfx.waitFor("#messages", containsText("Bob disconnected"), 200);

@@ -24,6 +24,7 @@ import org.kordamp.javatrove.example06.client.ChatClient;
 import javax.inject.Inject;
 import java.io.IOException;
 
+import static org.kordamp.javatrove.example06.ChatUtil.NAME_SEPARATOR;
 import static org.kordamp.javatrove.example06.ChatUtil.loginCommand;
 import static org.kordamp.javatrove.example06.ChatUtil.messageCommand;
 
@@ -35,9 +36,9 @@ public class ChatClientImpl implements ChatClient {
     private Client client;
 
     @Override
-    public void login(int timeout, String server, int port, String name) {
+    public void login(String server, int port, String name) {
         try {
-            client.connect(timeout, server, port);
+            client.connect(5000, server, port);
             client.sendTCP(loginCommand(name));
         } catch (IOException e) {
             throw new IllegalStateException(e);
@@ -45,7 +46,7 @@ public class ChatClientImpl implements ChatClient {
     }
 
     @Override
-    public void logout() {
+    public void logout(String name) {
         try {
             client.stop();
             client.dispose();
@@ -55,7 +56,7 @@ public class ChatClientImpl implements ChatClient {
     }
 
     @Override
-    public void send(String message) {
-        client.sendTCP(messageCommand(message));
+    public void send(String name, String message) {
+        client.sendTCP(messageCommand(name + NAME_SEPARATOR + " " + message));
     }
 }

@@ -42,7 +42,7 @@ public class AppController {
     public void login() {
         deferredManager.when(() -> {
             ChatClient client = injector.getInstance(ChatClient.class);
-            client.login(5000, model.getServer(), model.getPort(), model.getName());
+            client.login(model.getServer(), model.getPort(), model.getName());
             model.setClient(client);
         }).fail(this::handleException)
             .then((Void result) -> model.setConnected(true));
@@ -52,23 +52,27 @@ public class AppController {
         deferredManager.when(() -> {
             Optional<ChatClient> client = model.getClient();
             model.setClient(null);
-            client.ifPresent(ChatClient::logout);
+            client.ifPresent(c -> c.logout(model.getName()));
         }).fail(this::handleException)
-            .then((Void result) -> {
-                model.setConnected(false);
-                model.getMessages().clear();
-            });
+            .always((state, result, rejected) -> disconnect());
     }
 
     public void send() {
         deferredManager.when(() -> {
             String message = model.getMessage();
             model.setMessage("");
-            model.getClient().ifPresent(c -> c.send(message));
+            model.getClient().ifPresent(c -> c.send(model.getName(), message));
         });
     }
 
     private void handleException(Throwable throwable) {
+        model.setClient(null);
         eventBus.publishAsync(new ThrowableEvent(throwable));
+    }
+
+    private void disconnect() {
+        model.setClient(null);
+        model.setConnected(false);
+        model.getMessages().clear();
     }
 }

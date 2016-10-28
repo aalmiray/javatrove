@@ -22,7 +22,7 @@ package org.kordamp.javatrove.example07.client;
  * @author Andres Almiray
  */
 public interface ChatClient {
-    void login(int timeout, String host, int port, String name);
+    void login(String host, int port, String name);
 
     void logout(String name);
 

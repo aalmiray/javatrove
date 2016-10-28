@@ -21,7 +21,6 @@ package org.kordamp.javatrove.example08;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kordamp.javatrove.example08.client.AppModule;
@@ -61,7 +60,6 @@ public class FullTest {
     }
 
     @Test
-    @Ignore
     public void _02_login_without_server_results_in_error() {
         //when:
         testfx.clickOn("#name").write("Alice");
@@ -73,7 +71,7 @@ public class FullTest {
         testfx.clickOn("#loginButton");
 
         // then:
-        pause(200);
+        pause(500);
         testfx.waitUntil(testfx.window("Error"), isShowing(), 5);
         testfx.clickOn("OK");
     }
@@ -110,13 +108,13 @@ public class FullTest {
         client = injector.getInstance(ChatClient.class);
 
         // when:
-        client.login(5000, "localhost", ChatUtil.SERVER_PORT, "Bob");
+        client.login("localhost", ChatUtil.SERVER_PORT, "Bob");
 
         // then:
         testfx.waitFor("#messages", containsText("Alice> hello"), 200);
 
         // when:
-        client.send("howdy!");
+        client.send("Bob", "howdy!");
 
         // then:
         testfx.waitFor("#messages", containsText("Bob> howdy!"), 200);

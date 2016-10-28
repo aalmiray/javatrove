@@ -30,10 +30,10 @@ import javax.inject.Inject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.kordamp.javatrove.example08.ChatUtil.NAME_SEPARATOR;
 import static org.kordamp.javatrove.example08.ChatUtil.loginCommand;
 import static org.kordamp.javatrove.example08.ChatUtil.logoutCommand;
 import static org.kordamp.javatrove.example08.ChatUtil.messageCommand;
-import static org.zeromq.ZMQ.NOBLOCK;
 
 /**
  * @author Andres Almiray
@@ -54,7 +54,7 @@ public class ChatClientImpl implements ChatClient {
     private final AtomicBoolean running = new AtomicBoolean();
 
     @Override
-    public void login(int timeout, String server, int port, String name) {
+    public void login(String server, int port, String name) {
         try {
             context = ZMQ.context(2);
             subscriber = context.socket(ZMQ.SUB);
@@ -102,9 +102,9 @@ public class ChatClientImpl implements ChatClient {
     }
 
     @Override
-    public void send(String message) {
+    public void send(String name, String message) {
         try {
-            client.send(objectMapper.writeValueAsBytes(messageCommand(message)));
+            client.send(objectMapper.writeValueAsBytes(messageCommand(name + NAME_SEPARATOR + " " + message)));
             client.recv(0);
         } catch (Exception e) {
             LOG.error(UNEXPECTED_ERROR, e);

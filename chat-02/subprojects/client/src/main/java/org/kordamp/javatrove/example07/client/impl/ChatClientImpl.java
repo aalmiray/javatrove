@@ -56,7 +56,7 @@ public class ChatClientImpl implements ChatClient {
     private ChatGrpc.ChatStub asyncStub;
 
     @Override
-    public void login(int timeout, String host, int port, String name) {
+    public void login(String host, int port, String name) {
         channel = ManagedChannelBuilder.forAddress(host, port)
             .usePlaintext(true)
             .build();
