@@ -18,6 +18,7 @@
  */
 package org.kordamp.javatrove.example04.model;
 
+import io.reactivex.disposables.Disposable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -28,7 +29,6 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import rx.Subscription;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static org.kordamp.javatrove.example04.model.State.READY;
@@ -46,7 +46,7 @@ public class AppModel {
 
     @Getter
     @Setter
-    private Subscription subscription;
+    private Disposable disposable;
 
     public AppModel() {
         stateProperty().addListener((observable, oldValue, newValue) -> {

@@ -18,6 +18,7 @@
  */
 package org.kordamp.javatrove.example04.impl;
 
+import io.reactivex.Observable;
 import org.kordamp.javatrove.example04.model.Repository;
 import org.kordamp.javatrove.example04.service.Github;
 import org.kordamp.javatrove.example04.service.GithubAPI;
@@ -26,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import retrofit2.Response;
-import rx.Observable;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -69,7 +69,7 @@ public class GithubImpl implements Github {
         return items.flatMap(response -> {
             if (response.isSuccessful()) {
                 Links links = Links.of(response.headers().get("Link"));
-                Observable<T> currentPage = Observable.from(response.body());
+                Observable<T> currentPage = Observable.fromIterable(response.body());
                 if (links.hasNext()) {
                     return currentPage.concatWith(processPage(supplier, supplier.get(links)));
                 }

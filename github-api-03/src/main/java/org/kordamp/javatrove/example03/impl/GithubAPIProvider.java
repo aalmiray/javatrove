@@ -19,9 +19,9 @@
 package org.kordamp.javatrove.example03.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import org.kordamp.javatrove.example03.service.GithubAPI;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.inject.Inject;
@@ -44,7 +44,7 @@ public class GithubAPIProvider implements Provider<GithubAPI> {
         return new Retrofit.Builder()
             .baseUrl(githubApiUrl)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(GithubAPI.class);
     }

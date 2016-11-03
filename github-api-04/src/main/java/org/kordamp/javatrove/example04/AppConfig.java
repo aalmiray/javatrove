@@ -19,12 +19,12 @@
 package org.kordamp.javatrove.example04;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import org.kordamp.javatrove.example04.model.Repository;
 import org.kordamp.javatrove.example04.service.GithubAPI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import javax.inject.Named;
@@ -52,7 +52,7 @@ public class AppConfig {
         return new Retrofit.Builder()
             .baseUrl(githubApiUrl)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(GithubAPI.class);
     }

@@ -18,8 +18,8 @@
  */
 package org.kordamp.javatrove.example04.service;
 
+import io.reactivex.Observable;
 import org.kordamp.javatrove.example04.model.Repository;
-import rx.Observable;
 
 /**
  * @author Andres Almiray

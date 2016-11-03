@@ -18,13 +18,13 @@
  */
 package org.kordamp.javatrove.example03.controller;
 
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import org.kordamp.javatrove.example03.model.AppModel;
 import org.kordamp.javatrove.example03.model.Repository;
 import org.kordamp.javatrove.example03.service.Github;
 import org.kordamp.javatrove.example03.util.ApplicationEventBus;
 import org.kordamp.javatrove.example03.util.ThrowableEvent;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
@@ -46,9 +46,9 @@ public class AppController {
             observable = observable.take(model.getLimit());
         }
 
-        model.setSubscription(observable
+        model.setDisposable(observable
             .timeout(10, TimeUnit.SECONDS)
-            .doOnSubscribe(() -> model.setState(RUNNING))
+            .doOnSubscribe(disposable -> model.setState(RUNNING))
             .doOnTerminate(() -> model.setState(READY))
             .doOnError(throwable -> eventBus.publishAsync(new ThrowableEvent(throwable)))
             .subscribeOn(Schedulers.io())
@@ -56,8 +56,8 @@ public class AppController {
     }
 
     public void cancel() {
-        if (model.getSubscription() != null) {
-            model.getSubscription().unsubscribe();
+        if (model.getDisposable() != null) {
+            model.getDisposable().dispose();
             model.setState(READY);
         }
     }

@@ -18,6 +18,7 @@
  */
 package org.kordamp.javatrove.example03.controller;
 
+import io.reactivex.Observable;
 import lombok.Getter;
 import net.engio.mbassy.listener.Handler;
 import org.jukito.JukitoModule;
@@ -30,7 +31,6 @@ import org.kordamp.javatrove.example03.model.State;
 import org.kordamp.javatrove.example03.service.Github;
 import org.kordamp.javatrove.example03.util.ApplicationEventBus;
 import org.kordamp.javatrove.example03.util.ThrowableEvent;
-import rx.Observable;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -65,7 +65,7 @@ public class AppControllerTest {
     public void happyPath(Github github) {
         // given:
         Collection<Repository> repositories = createSampleRepositories();
-        when(github.repositories(ORGANIZATION)).thenReturn(Observable.from(repositories));
+        when(github.repositories(ORGANIZATION)).thenReturn(Observable.fromIterable(repositories));
 
         // when:
         model.setOrganization(ORGANIZATION);

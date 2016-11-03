@@ -18,6 +18,7 @@
  */
 package org.kordamp.javatrove.example04.controller;
 
+import io.reactivex.Observable;
 import lombok.Getter;
 import net.engio.mbassy.listener.Handler;
 import org.junit.Test;
@@ -34,7 +35,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import rx.Observable;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -67,7 +67,7 @@ public class AppControllerTest {
     public void happyPath() {
         // given:
         Collection<Repository> repositories = createSampleRepositories();
-        when(github.repositories(ORGANIZATION)).thenReturn(Observable.from(repositories));
+        when(github.repositories(ORGANIZATION)).thenReturn(Observable.fromIterable(repositories));
 
         // when:
         model.setOrganization(ORGANIZATION);

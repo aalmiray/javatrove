@@ -18,12 +18,12 @@
  */
 package org.kordamp.javatrove.example04.service;
 
+import io.reactivex.Observable;
 import org.kordamp.javatrove.example04.model.Repository;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
-import rx.Observable;
 
 import java.util.List;
 
