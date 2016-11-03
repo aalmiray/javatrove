@@ -28,7 +28,7 @@
 <?import org.tbee.javafx.scene.layout.fxml.MigPane?>
 <MigPane prefHeight="480" prefWidth="400"
          xmlns:fx="http://javafx.com/fxml"
-         layout="fill, wrap 2, debug" cols="[20%, shrink 200][]"
+         layout="fill, wrap 2" cols="[20%, shrink 200][]"
          fx:controller="org.kordamp.javatrove.example01.view.AppView">
     <Label text="Organization:"/>
     <TextField fx:id="organization" MigPane.cc="growx, push 200"/>
