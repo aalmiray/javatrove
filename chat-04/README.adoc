@@ -1,4 +1,4 @@
-= Example 06
+= Chat 04
 
 Simple JavaFX based chat application. MessagePack and Netty are used as encoding
 and transport.

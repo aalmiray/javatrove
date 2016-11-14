@@ -19,7 +19,7 @@
 
 apply plugin: 'application'
 
-mainClassName = 'org.kordamp.javatrove.example07.client.Main'
+mainClassName = 'org.kordamp.javatrove.chat02.client.Main'
 
 dependencies {
     compile project(':shared')

@@ -1,4 +1,4 @@
-= Example 06
+= Chat 03
 
 Simple JavaFX based chat application. MessagePack and JeroMQ are used as encoding
 and transport.
