@@ -38,6 +38,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testfx.framework.junit.ApplicationRule;
+import org.testfx.matcher.base.WindowMatchers;
 import org.testfx.service.support.WaitUntilSupport;
 
 import javax.inject.Inject;

@@ -32,6 +32,7 @@ import org.kordamp.javatrove.example03.model.Repository;
 import org.kordamp.javatrove.example03.service.GithubAPI;
 import org.kordamp.javatrove.example03.view.AppView;
 import org.testfx.framework.junit.ApplicationRule;
+import org.testfx.matcher.base.WindowMatchers;
 import org.testfx.service.support.WaitUntilSupport;
 
 import javax.inject.Inject;

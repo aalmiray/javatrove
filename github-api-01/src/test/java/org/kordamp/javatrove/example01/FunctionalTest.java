@@ -31,6 +31,7 @@ import org.junit.runners.MethodSorters;
 import org.kordamp.javatrove.example01.service.GithubAPI;
 import org.kordamp.javatrove.example01.view.AppView;
 import org.testfx.framework.junit.ApplicationRule;
+import org.testfx.matcher.base.WindowMatchers;
 import org.testfx.service.support.WaitUntilSupport;
 
 import javax.inject.Inject;

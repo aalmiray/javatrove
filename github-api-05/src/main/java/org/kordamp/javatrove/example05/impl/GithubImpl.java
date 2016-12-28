@@ -46,7 +46,7 @@ public class GithubImpl implements Github {
     public Flux<Repository> repositories(String organization) {
         requireNonNull(organization, "Argument 'organization' must not be blank");
 
-        return paginatedObservable(
+        return paginatedFlux(
             () -> {
                 LOG.info("Querying /orgs/{}/repos", organization);
                 return api.repositories(organization);
@@ -58,7 +58,7 @@ public class GithubImpl implements Github {
             });
     }
 
-    private static <T> Flux<T> paginatedObservable(FirstPageSupplier<T> firstPage, NextPageSupplier<T> nextPage) {
+    private static <T> Flux<T> paginatedFlux(FirstPageSupplier<T> firstPage, NextPageSupplier<T> nextPage) {
         requireNonNull(firstPage, "Argument 'firstPage' must not be null");
         requireNonNull(nextPage, "Argument 'nextPage' must not be null");
 
