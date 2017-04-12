@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Andres Almiray
+ * Copyright 2016-2017 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -75,7 +75,7 @@ license {
         java = 'SLASHSTAR_STYLE'
         fxml = 'XML_STYLE'
     }
-    ext.year    = '2016'
+    ext.year    = '2016-2017'
     ext.author  = 'Andres Almiray'
     ext.project = 'Java Trove Examples'
 }
@@ -86,8 +86,8 @@ jacoco {
 
 idea {
     project {
-        jdkName "1.8"
-        languageLevel "1.8"
+        jdkName '1.8'
+        languageLevel '1.8'
         ipr {
             withXml { provider ->
                 def node = provider.asNode()
