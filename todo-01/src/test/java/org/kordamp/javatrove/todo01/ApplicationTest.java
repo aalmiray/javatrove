@@ -26,8 +26,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.kordamp.javatrove.todo01.AppModule;
-import org.kordamp.javatrove.todo01.Application;
 
 import javax.inject.Inject;
 

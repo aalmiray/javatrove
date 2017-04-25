@@ -21,7 +21,6 @@ package org.kordamp.javatrove.todo01.spark;
 import org.kordamp.javatrove.todo01.routes.CreateTodoRoute;
 import org.kordamp.javatrove.todo01.routes.ListTodosRoute;
 import org.kordamp.javatrove.todo01.routes.Routes;
-import spark.template.mustache.MustacheTemplateEngine;
 
 import javax.inject.Inject;
 
