@@ -31,6 +31,19 @@ repositories {
     jcenter()
 }
 
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'pr', 'atlassian'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}
+
 dependencies {
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
     compileOnly "org.projectlombok:lombok:$lombokVersion"
@@ -80,7 +93,7 @@ license {
 }
 
 jacoco {
-    toolVersion = '0.7.7.201606060606'
+    toolVersion = '0.7.9'
 }
 
 idea {
