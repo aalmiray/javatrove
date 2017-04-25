@@ -1,0 +1,134 @@
+/*
+ * Copyright 2016-2017 Andres Almiray
+ *
+ * This file is part of Java Trove Examples
+ *
+ * Java Trove Examples is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Java Trove Examples is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+plugins {
+    id 'war'
+    id 'idea'
+    id 'jetty'
+    id 'jacoco'
+    id 'net.ltgt.apt'                    version '0.9'
+    id 'com.github.ben-manes.versions'   version '0.14.0'
+    id 'com.github.hierynomus.license'   version '0.11.0'
+    id 'org.kordamp.gradle.stats'        version '0.2.0'
+    id 'io.spring.dependency-management' version '1.0.2.RELEASE'
+}
+
+repositories {
+    jcenter()
+    maven { url 'http://clojars.org/repo/' }
+}
+
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'pr', 'atlassian'].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject('Release candidate')
+            }
+        }
+    }
+}
+
+dependencyManagement {
+    dependencies {
+        dependency "org.jboss.arquillian:arquillian-bom:$arquillianVersion"
+    }
+}
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    apt         "org.projectlombok:lombok:$lombokVersion"
+
+    compileOnly "javax:javaee-api:$javaeeapiVersion"
+    compile "com.github.spullara.mustache.java:compiler:$mustacheVersion"
+    compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile("com.google.inject:guice:$guiceVersion") {
+        exclude group: 'org.sonatype.sisu.inject', module: 'cglib'
+    }
+    compile "com.google.inject.extensions:guice-servlet:$guiceVersion"
+    compile 'ru.vyarus:guice-ext-annotations:1.2.1'
+    compile "org.sql2o:sql2o:$sql2oVersion"
+    compile "com.zaxxer:HikariCP:$hikaricpVersion"
+
+    runtime "com.h2database:h2:$h2Version"
+    runtime "org.slf4j:slf4j-simple:$slf4jVersion"
+
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    testCompile "org.jukito:jukito:$jukitoVersion"
+    testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
+    testCompile "io.rest-assured:rest-assured:$restassuredVersion"
+
+    testCompile "javax:javaee-api:$javaeeapiVersion"
+    testCompile "org.jboss.arquillian.junit:arquillian-junit-container:$arquillianVersion"
+    testCompile "org.jboss.arquillian.container:arquillian-tomcat-embedded-8:$arquillianTomcatVersion"
+    testCompile "org.apache.tomcat:tomcat-catalina:$tomcatVersion"
+
+    testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-gradle-depchain:$shrinkwrapVersion"
+    testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven:$shrinkwrapVersion"
+    testCompile "org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven:$shrinkwrapVersion"
+}
+
+license {
+    header = rootProject.file('gradle/HEADER')
+    strictCheck = true
+    ignoreFailures = true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+        fxml = 'XML_STYLE'
+    }
+    ext.year    = '2016-2017'
+    ext.author  = 'Andres Almiray'
+    ext.project = 'Java Trove Examples'
+}
+
+jettyRun {
+    contextPath = ''
+}
+
+jacoco {
+    toolVersion = '0.7.9'
+}
+
+idea {
+    project {
+        jdkName '1.8'
+        languageLevel '1.8'
+        ipr {
+            withXml { provider ->
+                def node = provider.asNode()
+                node.component.find { it.'@name' == 'VcsDirectoryMappings' }?.mapping[0].'@vcs' = 'Git'
+
+                def compilerConfiguration = node.component.find { it.'@name' == 'CompilerConfiguration' }
+                compilerConfiguration.remove(compilerConfiguration.annotationProcessing)
+                compilerConfiguration.append(new XmlParser().parseText("""
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>"""))
+            }
+        }
+    }
+}

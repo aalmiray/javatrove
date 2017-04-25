@@ -1,0 +1,22 @@
+<form action="/todos" method="post">
+    <input type="text" id="description" name="description" size="100"/> <input type="submit" value="Create"/>
+</form>
+
+<form>
+    <table id="todo-table" width="100">
+        <thead>
+        <tr>
+            <th width="90">Todo</th>
+            <th>Done</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#todos}}
+            <tr id="todo-{{id}}">
+                <td id="todo-{{id}}-description">{{description}}</td>
+                <td><input id="todo-{{id}}-done" type="checkbox" value="{{id}}" {{#checker}}{{done}}{{/checker}}/></td>
+            </tr>
+        {{/todos}}
+        </tbody>
+    </table>
+</form>

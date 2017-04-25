@@ -1,0 +1,69 @@
+= Todo 02
+
+Simple web application that models a Todo app.
+Uses the JavaEE Servlet API.
+
+Production libraries used in this project:
+
+ * link:https://github.com/google/guice[Google Guice].
+ * link:https://github.com/xvik/guice-ext-annotations[guice-ext-annotations].
+ * link:https://github.com/FasterXML/jackson[Jackson].
+ * link:https://projectlombok.org/features/index.html[Lombok].
+ * link:https://github.com/google/guava[Google Guava].
+ * link:http://www.sql2o.org/[Sql2o].
+ * link:https://github.com/brettwooldridge/HikariCP[HikariCP].
+ * link:https://github.com/spullara/mustache.java[Mustache].
+ * link:http://www.h2database.com/html/main.html[H2].
+
+Test libraries used in this project:
+
+ * link:http://junit.org/junit4/[JUnit].
+ * link:http://hamcrest.org/[Hamcrest].
+ * link:http://site.mockito.org/[Mockito].
+ * link:https://github.com/ArcBees/Jukito[Jukito].
+ * link:https://github.com/rest-assured/rest-assured[REST-assured].
+ * link:http://arquillian.org/[Arquillian].
+
+== Running
+
+Run the application by invoking
+
+    $ ./gradlew jettyRun
+
+== IDE Configuration
+
+Make sure to have annotation processing enabled in your IDE.
+
+[horizontal]
+NetBeans:: This setting is enabled by default. JARs with annotation processors
+will be automatically found in the classpath.
+IntelliJ:: You must enable "Annotation Processing" in the project preferences.
+JARs with annotation processors will be found in the classpath.
+Eclipse:: You must enable "Annotation Processing" in the project preferences.
+You also need to manually specify which JARs contain annotation processors,
+this would be the Lombok dependency. Alternatively there's an UI based installer
+for Lombok that solves this problem.
+
+== License
+
+All code found in this repository is licensed under GPL v3
+
+[source]
+----
+Copyright 2016-2017 Andres Almiray
+
+This file is part of Java Trove Examples
+
+Java Trove Examples is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Java Trove Examples is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
+----

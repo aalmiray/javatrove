@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+    <listener>
+        <listener-class>org.kordamp.javatrove.todo02.servlet.AppGuiceServletContextListener</listener-class>
+    </listener>
+
+    <filter-mapping>
+        <filter-name>guice-filter</filter-name>
+        <url-pattern>/todos</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>guice-filter</filter-name>
+        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    </filter>
+</web-app>
