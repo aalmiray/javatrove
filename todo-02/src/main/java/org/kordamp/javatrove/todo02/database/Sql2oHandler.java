@@ -18,7 +18,7 @@
  */
 package org.kordamp.javatrove.todo02.database;
 
-import org.kordamp.javatrove.todo01.exceptions.RuntimeSql2oException;
+import org.kordamp.javatrove.todo02.exceptions.RuntimeSql2oException;
 
 /**
  * @author Andres Almiray

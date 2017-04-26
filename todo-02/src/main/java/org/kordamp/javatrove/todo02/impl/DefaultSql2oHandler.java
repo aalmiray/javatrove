@@ -18,9 +18,9 @@
  */
 package org.kordamp.javatrove.todo02.impl;
 
-import org.kordamp.javatrove.todo01.database.Sql2oCallback;
-import org.kordamp.javatrove.todo01.database.Sql2oHandler;
-import org.kordamp.javatrove.todo01.exceptions.RuntimeSql2oException;
+import org.kordamp.javatrove.todo02.database.Sql2oCallback;
+import org.kordamp.javatrove.todo02.database.Sql2oHandler;
+import org.kordamp.javatrove.todo02.exceptions.RuntimeSql2oException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.sql2o.Sql2o;
