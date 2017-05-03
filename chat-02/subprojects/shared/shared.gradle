@@ -31,7 +31,9 @@ apply plugin: 'com.google.protobuf'
 
 dependencies {
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly     "org.projectlombok:lombok:$lombokVersion"
+    apt             "org.projectlombok:lombok:$lombokVersion"
+    testApt         "org.projectlombok:lombok:$lombokVersion"
 
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
@@ -39,6 +41,15 @@ dependencies {
     compile("com.google.protobuf:protobuf-java-util:${protobufVersion}") {
         exclude group: 'com.google.guava', module: 'guava'
     }
+
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "com.google.guava:guava:$guavaVersion"
+    compile("com.google.inject:guice:$guiceVersion") {
+        exclude group: 'org.sonatype.sisu.inject', module: 'cglib'
+    }
+    compile 'ru.vyarus:guice-ext-annotations:1.2.1'
+
+    runtime "org.slf4j:slf4j-simple:$slf4jVersion"
 }
 
 idea {

@@ -45,8 +45,10 @@ dependencyUpdates.resolutionStrategy = {
 }
 
 dependencies {
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly     "org.projectlombok:lombok:$lombokVersion"
+    apt             "org.projectlombok:lombok:$lombokVersion"
+    testApt         "org.projectlombok:lombok:$lombokVersion"
 
     compile "net.engio:mbassador:$mbassadorVersion"
     compile "org.reactfx:reactfx:2.0-M5"

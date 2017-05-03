@@ -22,9 +22,10 @@ plugins {
     id 'application'
     id 'idea'
     id 'jacoco'
+    id 'net.ltgt.apt'                  version '0.10'
     id 'com.github.ben-manes.versions' version '0.14.0'
     id 'com.github.hierynomus.license' version '0.11.0'
-    id 'org.kordamp.gradle.stats' version '0.2.0'
+    id 'org.kordamp.gradle.stats'      version '0.2.0'
 }
 
 repositories {
@@ -46,7 +47,9 @@ dependencyUpdates.resolutionStrategy = {
 
 dependencies {
     testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly     "org.projectlombok:lombok:$lombokVersion"
+    apt             "org.projectlombok:lombok:$lombokVersion"
+    testApt         "org.projectlombok:lombok:$lombokVersion"
 
     compile "net.engio:mbassador:$mbassadorVersion"
     compile "org.reactfx:reactfx:2.0-M5"
@@ -56,6 +59,7 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
     compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+    compile "com.google.guava:guava:$guavaVersion"
     compile("com.google.inject:guice:$guiceVersion") {
         exclude group: 'org.sonatype.sisu.inject', module: 'cglib'
     }
