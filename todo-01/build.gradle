@@ -51,7 +51,7 @@ dependencies {
     apt         "org.projectlombok:lombok:$lombokVersion"
 
     compile "com.sparkjava:spark-core:$sparkjavaVersion"
-    compile "com.sparkjava:spark-template-mustache:$sparkjavaVersion"
+    compile "com.sparkjava:spark-template-mustache:$sparkMustacheVersion"
     compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
     compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
     compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
