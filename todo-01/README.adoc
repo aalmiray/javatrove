@@ -1,5 +1,7 @@
 = Example 01
 
+image:https://img.shields.io/badge/donations-Patreon-f96854.svg[link="https://www.patreon.com/user?u=6609318"]
+
 Simple web application that models a Todo app.
 Uses SparkJava as web framework.
 

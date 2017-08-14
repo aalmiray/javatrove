@@ -1,5 +1,7 @@
 = Chat 04
 
+image:https://img.shields.io/badge/donations-Patreon-f96854.svg[link="https://www.patreon.com/user?u=6609318"]
+
 Simple JavaFX based chat application. MessagePack and Netty are used as encoding
 and transport.
 

@@ -1,5 +1,7 @@
 = Example 04
 
+image:https://img.shields.io/badge/donations-Patreon-f96854.svg[link="https://www.patreon.com/user?u=6609318"]
+
 Simple JavaFX based application that can issue a REST call to GitHub's API.
 
 This version builds on the concepts shown by `Example 03` but uses Spring as

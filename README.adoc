@@ -1,5 +1,7 @@
 = Java Trove
 
+image:https://img.shields.io/badge/donations-Patreon-f96854.svg[link="https://www.patreon.com/user?u=6609318"]
+
 This repository holds the code of sample applications used to demonstrate
 several Open Source Java libraries and/or techniques.
 
