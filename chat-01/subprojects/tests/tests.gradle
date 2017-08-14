@@ -47,10 +47,10 @@ jacocoTestReport {
     group = 'Reporting'
     description = 'Generate Jacoco coverage reports after running tests.'
 
-    List _classDirectories = [project(':tests').sourceSets.main.output.classesDir.path]
+    List _classDirectories = [project(':tests').sourceSets.main.output.classesDirs.asPath]
     Set _sourceDirectories = [project(':tests').sourceSets.main.allSource.srcDirs] as Set
     project.dependentProjects.each { String projectName ->
-        _classDirectories << project(projectName).sourceSets.main.output.classesDir.path
+        _classDirectories << project(projectName).sourceSets.main.output.classesDirs.asPath
         _sourceDirectories << project(projectName).sourceSets.main.allSource.srcDirs
     }
 
