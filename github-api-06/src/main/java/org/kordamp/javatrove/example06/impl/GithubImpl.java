@@ -41,14 +41,13 @@ public class GithubImpl implements Github {
     @Override
     public CompletableFuture<Collection<Repository>> repositories(final String organization) {
         Supplier<Collection<Repository>> supplier = () -> {
-            Response<List<Repository>> response = null;
             try {
-                response = api.repositories(organization).execute();
+                Response<List<Repository>> response = api.repositories(organization).execute();
+                if (response.isSuccessful()) { return response.body(); }
+                throw new IllegalStateException(response.message());
             } catch (IOException e) {
                 throw new IllegalStateException(e);
             }
-            if (response.isSuccessful()) { return response.body(); }
-            throw new IllegalStateException(response.message());
         };
         return CompletableFuture.supplyAsync(supplier, executorService);
     }
