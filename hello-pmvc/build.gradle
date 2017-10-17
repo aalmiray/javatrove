@@ -51,15 +51,7 @@ dependencies {
     apt             "org.projectlombok:lombok:$lombokVersion"
     testApt         "org.projectlombok:lombok:$lombokVersion"
 
-    compile "net.engio:mbassador:$mbassadorVersion"
-    compile "org.reactfx:reactfx:2.0-M5"
     compile "org.slf4j:slf4j-api:$slf4jVersion"
-    compile "org.jdeferred:jdeferred-core:$jdeferredVersion"
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
-    compile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
-    compile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
-    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
     compile "com.google.guava:guava:$guavaVersion"
     compile("com.google.inject:guice:$guiceVersion") {
         exclude group: 'org.sonatype.sisu.inject', module: 'cglib'
@@ -77,12 +69,15 @@ dependencies {
     testCompile "org.jukito:jukito:$jukitoVersion"
     testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
     testCompile "org.awaitility:awaitility:$awaitilityVersion"
-    testCompile "com.github.tomakehurst:wiremock:$wiremockVersion"
     testCompile "org.testfx:testfx-core:$testfxVersion"
     testCompile "org.testfx:testfx-junit:$testfxVersion"
+    testCompile "pl.pragmatists:JUnitParams:$junitParamsVersion"
+    testCompile "org.assertj:assertj-core:$assertjVersion"
+    testCompile "com.google.truth:truth:$truthVersion"
+    testCompile "org.jgotesting:jgotesting:$jgotestingVersion"
 }
 
-mainClassName = 'org.kordamp.javatrove.example01.Launcher'
+mainClassName = 'org.kordamp.javatrove.hello.pmvc.Launcher'
 
 license {
     header = rootProject.file('gradle/HEADER')
