@@ -18,7 +18,7 @@
  */
 
 plugins {
-    id 'java'
+    id 'groovy'
     id 'application'
     id 'idea'
     id 'jacoco'
@@ -80,9 +80,14 @@ dependencies {
     testCompile "com.github.tomakehurst:wiremock:$wiremockVersion"
     testCompile "org.testfx:testfx-core:$testfxVersion"
     testCompile "org.testfx:testfx-junit:$testfxVersion"
+    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
+    testCompile("org.spockframework:spock-guice:$spockVersion") {
+        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+    }
 }
 
 mainClassName = 'org.kordamp.javatrove.example01.Launcher'
+compileGroovy.enabled = false
 
 license {
     header = rootProject.file('gradle/HEADER')
