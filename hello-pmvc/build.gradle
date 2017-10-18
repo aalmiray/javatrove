@@ -79,6 +79,9 @@ dependencies {
     testCompile("org.spockframework:spock-guice:$spockVersion") {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
+    testCompile( 'com.athaydes:spock-reports:1.3.2' ) {
+        transitive = false
+    }
 }
 
 mainClassName = 'org.kordamp.javatrove.hello.pmvc.Launcher'
