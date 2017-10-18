@@ -83,6 +83,8 @@ dependencies {
         transitive = false
     }
     testCompile "com.tngtech.jgiven:jgiven-junit:$jgivenVersion"
+    testCompile "org.jbehave:jbehave-core:$jbehaveVersion"
+
 }
 
 mainClassName = 'org.kordamp.javatrove.hello.pmvc.Launcher'
