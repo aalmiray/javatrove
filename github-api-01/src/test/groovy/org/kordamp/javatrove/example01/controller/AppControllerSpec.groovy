@@ -9,7 +9,6 @@ import org.kordamp.javatrove.example01.model.Repository
 import org.kordamp.javatrove.example01.service.Github
 import org.kordamp.javatrove.example01.util.ApplicationEventBus
 import spock.guice.UseModules
-import spock.lang.Shared
 import spock.lang.Specification
 
 import javax.inject.Inject
@@ -21,7 +20,7 @@ import javax.inject.Inject
 class AppControllerSpec extends Specification {
     private static final String ORGANIZATION = 'foo'
 
-    @Inject @Shared private AppController controller
+    @Inject private AppController controller
     @Inject private AppModel model
     @Inject private ApplicationEventBus eventBus
 
