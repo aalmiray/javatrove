@@ -18,7 +18,7 @@
  */
 
 plugins {
-    id 'java'
+    id 'groovy'
     id 'application'
     id 'idea'
     id 'jacoco'
@@ -75,9 +75,14 @@ dependencies {
     testCompile "org.assertj:assertj-core:$assertjVersion"
     testCompile "com.google.truth:truth:$truthVersion"
     testCompile "org.jgotesting:jgotesting:$jgotestingVersion"
+    testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
+    testCompile("org.spockframework:spock-guice:$spockVersion") {
+        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+    }
 }
 
 mainClassName = 'org.kordamp.javatrove.hello.pmvc.Launcher'
+compileGroovy.enabled = false
 
 license {
     header = rootProject.file('gradle/HEADER')
