@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -48,7 +48,7 @@ public class AppController {
             flux = flux.take(model.getLimit());
         }
 
-        model.setCancellation(flux.timeout(Duration.ofSeconds(10L))
+        model.setDisposable(flux.timeout(Duration.ofSeconds(10L))
             .doOnSubscribe(subscription -> model.setState(RUNNING))
             .doOnTerminate(() -> model.setState(READY))
             .doOnError(throwable -> eventBus.publishAsync(new ThrowableEvent(throwable)))
@@ -57,8 +57,8 @@ public class AppController {
     }
 
     public void cancel() {
-        if (model.getCancellation() != null) {
-            model.getCancellation().dispose();
+        if (model.getDisposable() != null) {
+            model.getDisposable().dispose();
             model.setState(READY);
         }
     }

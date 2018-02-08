@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -28,7 +28,7 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import reactor.core.Cancellation;
+import reactor.core.Disposable;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static org.kordamp.javatrove.example05.model.State.READY;
@@ -46,7 +46,7 @@ public class AppModel {
 
     @Getter
     @Setter
-    private Cancellation cancellation;
+    private Disposable disposable;
 
     public AppModel() {
         stateProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -40,11 +40,11 @@ public class ChatUtil {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             byte[] bytes = md.digest(content.getBytes());
 
-            String result = "";
+            StringBuilder result = new StringBuilder();
             for (byte b : bytes) {
-                result += Integer.toString((b & 0xff) + 0x100, 16).substring(1);
+                result.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
             }
-            return result;
+            return result.toString();
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }

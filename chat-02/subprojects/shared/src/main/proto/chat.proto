@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -29,11 +29,11 @@ option java_outer_classname = "ChatProto";
 option objc_class_prefix = "JT";
 
 service Chat {
-    rpc login(Login) returns (stream Response) {}
+    rpc login (Login) returns (stream Response);
 
-    rpc logout(Logout) returns (google.protobuf.Empty) {}
+    rpc logout (Logout) returns (google.protobuf.Empty);
 
-    rpc send(Message) returns (google.protobuf.Empty) {}
+    rpc send (Message) returns (google.protobuf.Empty);
 }
 
 message Login {

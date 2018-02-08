@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 Andres Almiray
+ * Copyright 2016-2018 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -66,6 +66,7 @@ public class AppView {
     @FXML private VBox placeholder;
 
     private StyleClassedTextArea content;
+    private ObservableList<String> uiMessages;
 
     public Scene createScene() {
         String basename = getClass().getPackage().getName().replace('.', '/') + "/app";
@@ -83,8 +84,8 @@ public class AppView {
         content.setId("messages");
         content.setEditable(false);
 
-        ObservableList<String> messages = createJavaFXThreadProxyList(model.getMessages());
-        EventStreams.changesOf(messages).subscribe(this::handleMessages);
+        uiMessages = createJavaFXThreadProxyList(model.getMessages());
+        EventStreams.changesOf(uiMessages).subscribe(this::handleMessages);
 
         VirtualizedScrollPane<StyleClassedTextArea> scrollPane = new VirtualizedScrollPane<>(content);
         placeholder.getChildren().add(scrollPane);
