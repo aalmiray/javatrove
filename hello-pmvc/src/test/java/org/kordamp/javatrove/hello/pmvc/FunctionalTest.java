@@ -53,7 +53,7 @@ public class FunctionalTest {
     });
 
     @Test
-    public void _01_empty_name() throws Exception {
+    public void _01_empty_name() {
         // when:
         testfx.clickOn("#sayHelloButton");
 
@@ -69,7 +69,7 @@ public class FunctionalTest {
             .write(NAME);
         testfx.clickOn("#sayHelloButton");
 
-        // then::
+        // then:
         verifyThat("#output", hasText("Hello " + NAME));
     }
 }

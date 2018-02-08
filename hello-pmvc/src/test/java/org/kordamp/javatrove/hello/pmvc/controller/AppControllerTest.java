@@ -43,8 +43,8 @@ public class AppControllerTest {
     @Test
     public void happyPath(HelloService service) {
         // given:
-        String input = "";
-        String output = "EMPTY";
+        String input = "Test";
+        String output = "Hello Test";
         when(service.sayHello(input)).thenReturn(output);
 
         // when:
