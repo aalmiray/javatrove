@@ -50,6 +50,12 @@ public class AppModel {
     @Setter
     private ChatClient client;
 
+    public void cleanup() {
+        setClient(null);
+        setConnected(false);
+        getMessages().clear();
+    }
+
     public Optional<ChatClient> getClient() {
         return Optional.ofNullable(client);
     }

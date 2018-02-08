@@ -53,9 +53,7 @@ public class ClientDisconnectCommandHandler implements ClientCommandHandler {
                 } catch (IOException ignored) {
                     // OK
                 }
-                model.setClient(null);
-                model.setConnected(false);
-                model.getMessages().clear();
+                model.cleanup();
             }
         });
     }

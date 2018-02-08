@@ -27,8 +27,7 @@ import javax.inject.Inject;
  * @author Andres Almiray
  */
 public class Main {
-    @Inject
-    private ChatServer server;
+    @Inject private ChatServer server;
 
     public static void main(String[] args) throws Exception {
         Injector injector = Guice.createInjector(new ServerModule());

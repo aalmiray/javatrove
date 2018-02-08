@@ -32,8 +32,7 @@ import static org.kordamp.javatrove.chat01.ChatUtil.messageCommand;
  * @author Andres Almiray
  */
 public class ChatClientImpl implements ChatClient {
-    @Inject
-    private Client client;
+    @Inject private Client client;
 
     @Override
     public void login(String server, int port, String name) {

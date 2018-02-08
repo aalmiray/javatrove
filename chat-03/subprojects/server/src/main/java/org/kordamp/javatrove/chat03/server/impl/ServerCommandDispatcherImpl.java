@@ -37,8 +37,7 @@ import java.util.Set;
  * @author Andres Almiray
  */
 public class ServerCommandDispatcherImpl implements ServerCommandDispatcher {
-    @Inject
-    private Injector injector;
+    @Inject private Injector injector;
 
     private final Set<ServerCommandHandler> commandHandlers = new LinkedHashSet<>();
 

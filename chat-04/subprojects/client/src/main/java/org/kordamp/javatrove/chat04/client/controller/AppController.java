@@ -35,9 +35,7 @@ public class AppController {
     @Inject private AppModel model;
     @Inject private DeferredManager deferredManager;
     @Inject private ApplicationEventBus eventBus;
-
-    @Inject
-    private Injector injector;
+    @Inject private Injector injector;
 
     public void login() {
         deferredManager.when(() -> {
@@ -53,7 +51,7 @@ public class AppController {
             Optional<ChatClient> client = model.getClient();
             client.ifPresent(c -> c.logout(model.getName()));
         }).fail(this::handleException)
-            .always((state, result, rejected) -> disconnect());
+            .always((state, result, rejected) -> model.cleanup());
     }
 
     public void send() {
@@ -61,17 +59,11 @@ public class AppController {
             String message = model.getMessage();
             model.setMessage("");
             model.getClient().ifPresent(c -> c.send(model.getName(), message));
-        }).fail(throwable -> disconnect());
+        }).fail(throwable -> model.cleanup());
     }
 
     private void handleException(Throwable throwable) {
         model.setClient(null);
         eventBus.publishAsync(new ThrowableEvent(throwable));
-    }
-
-    private void disconnect() {
-        model.setClient(null);
-        model.setConnected(false);
-        model.getMessages().clear();
     }
 }
