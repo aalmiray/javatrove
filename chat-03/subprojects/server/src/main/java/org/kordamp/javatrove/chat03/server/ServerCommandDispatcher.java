@@ -25,5 +25,5 @@ import org.zeromq.ZMQ;
  * @author Andres Almiray
  */
 public interface ServerCommandDispatcher {
-    void dispatch(ZMQ.Socket publisher, Command command);
+    void dispatch(ZMQ.Socket publisher, Command command) throws CommandExecutionException;
 }

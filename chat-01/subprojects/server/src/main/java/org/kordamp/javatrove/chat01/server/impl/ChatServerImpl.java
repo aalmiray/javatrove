@@ -30,12 +30,10 @@ import java.io.IOException;
  * @author Andres Almiray
  */
 public class ChatServerImpl implements ChatServer {
-    @Inject
     @Named(ChatUtil.SERVER_PORT_KEY)
-    private int port;
+    @Inject private int port;
 
-    @Inject
-    private Server server;
+    @Inject private Server server;
 
     @Override
     public void start() {

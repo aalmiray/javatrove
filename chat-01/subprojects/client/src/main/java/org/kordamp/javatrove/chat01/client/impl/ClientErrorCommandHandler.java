@@ -16,32 +16,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.chat01.server.impl;
+package org.kordamp.javatrove.chat01.client.impl;
 
+import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Server;
-import org.kordamp.javatrove.chat01.ChatUtil;
+import org.kordamp.javatrove.chat01.Command;
+import org.kordamp.javatrove.chat01.client.ClientCommandHandler;
+import org.kordamp.javatrove.chat01.client.util.ApplicationEventBus;
+import org.kordamp.javatrove.chat01.client.util.ThrowableEvent;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
+
+import static org.kordamp.javatrove.chat01.Command.Type.ERROR;
 
 /**
  * @author Andres Almiray
  */
-public class ServerProvider implements Provider<Server> {
-    @Inject private ServerKryoListener serverKryoListener;
+public class ClientErrorCommandHandler implements ClientCommandHandler {
+    public static final String NAME = "_ERROR_";
+
+    @Inject private ApplicationEventBus eventBus;
 
     @Override
-    public Server get() {
-        Server server = new Server() {
-            @Override
-            protected Connection newConnection() {
-                return new NamedConnection();
-            }
-        };
-        ChatUtil.registerClasses(server);
-        serverKryoListener.setServer(server);
-        server.addListener(serverKryoListener);
-        return server;
+    public boolean supports(Command.Type commandType) {
+        return commandType == ERROR;
+    }
+
+    @Override
+    public void handle(Client client, Connection connection, Command command) {
+        eventBus.publishAsync(new ThrowableEvent(new Throwable(command.getPayload())));
     }
 }

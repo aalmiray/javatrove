@@ -48,20 +48,20 @@ public class ApplicationEventHandler {
 
     @Handler
     public void handleThrowable(ThrowableEvent event) {
+        TitledPane pane = new TitledPane();
+        pane.setId("stacktrace");
+        pane.setCollapsible(false);
+        pane.setText("Stacktrace");
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        pane.setContent(textArea);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        event.getThrowable().printStackTrace(new PrintStream(baos));
+        textArea.setText(baos.toString());
+
         Platform.runLater(() -> {
-            TitledPane pane = new TitledPane();
-            pane.setId("stacktrace");
-            pane.setCollapsible(false);
-            pane.setText("Stacktrace");
-            TextArea textArea = new TextArea();
-            textArea.setEditable(false);
-            pane.setContent(textArea);
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            event.getThrowable().printStackTrace(new PrintStream(baos));
-            textArea.setText(baos.toString());
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+            final Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("An unexpected error occurred");
             alert.getDialogPane().setContent(pane);

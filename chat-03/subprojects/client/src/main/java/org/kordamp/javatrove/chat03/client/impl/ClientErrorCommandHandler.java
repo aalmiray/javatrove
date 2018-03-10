@@ -16,31 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.kordamp.javatrove.chat03;
+package org.kordamp.javatrove.chat03.client.impl;
 
-import lombok.Builder;
-import lombok.Data;
+import org.kordamp.javatrove.chat03.Command;
+import org.kordamp.javatrove.chat03.client.ClientCommandHandler;
+import org.kordamp.javatrove.chat03.client.util.ApplicationEventBus;
+import org.kordamp.javatrove.chat03.client.util.ThrowableEvent;
+
+import javax.inject.Inject;
+
+import static org.kordamp.javatrove.chat03.Command.Type.ERROR;
 
 /**
  * @author Andres Almiray
  */
-@Data
-public class Command {
-    public enum Type {
-        LOGIN,
-        LOGOUT,
-        MESSAGE,
-        ERROR
+public class ClientErrorCommandHandler implements ClientCommandHandler {
+    public static final String NAME = "_ERROR_";
+
+    @Inject private ApplicationEventBus eventBus;
+
+    @Override
+    public boolean supports(Command.Type commandType) {
+        return commandType == ERROR;
     }
 
-    private Type type;
-    private String payload;
-
-    @Builder
-    public static Command create(Type type, String payload) {
-        Command cmd = new Command();
-        cmd.setType(type);
-        cmd.setPayload(payload);
-        return cmd;
+    @Override
+    public void handle(Command command) {
+        eventBus.publishAsync(new ThrowableEvent(new Throwable(command.getPayload())));
     }
 }

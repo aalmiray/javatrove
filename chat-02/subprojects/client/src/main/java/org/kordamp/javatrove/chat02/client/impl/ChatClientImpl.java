@@ -97,8 +97,9 @@ public class ChatClientImpl implements ChatClient {
             .setMessage(name + NAME_SEPARATOR + " " + message)
             .build(), new StreamObserverAdapter<Empty>() {
             @Override
-            public void onError(Throwable t) {
-                eventBus.publishAsync(new DisconnectEvent(t));
+            public void onError(Throwable throwable) {
+                eventBus.publishAsync(new ThrowableEvent(throwable));
+                eventBus.publishAsync(new DisconnectEvent(throwable));
             }
         });
     }

@@ -24,11 +24,6 @@ mainClassName = 'org.kordamp.javatrove.chat01.server.Main'
 dependencies {
     compile project(':shared')
 
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly     "org.projectlombok:lombok:$lombokVersion"
-    apt             "org.projectlombok:lombok:$lombokVersion"
-    testApt         "org.projectlombok:lombok:$lombokVersion"
-
     testCompile "junit:junit:$junitVersion"
     testCompile "org.mockito:mockito-core:$mockitoVersion"
     testCompile "org.jukito:jukito:$jukitoVersion"

@@ -22,7 +22,6 @@ plugins {
     id 'application'
     id 'idea'
     id 'jacoco'
-    id 'net.ltgt.apt'                  version '0.13'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'com.github.hierynomus.license' version '0.14.0'
     id 'org.kordamp.gradle.stats'      version '0.2.2'
@@ -46,10 +45,10 @@ dependencyUpdates.resolutionStrategy = {
 }
 
 dependencies {
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly     "org.projectlombok:lombok:$lombokVersion"
-    apt             "org.projectlombok:lombok:$lombokVersion"
-    testApt         "org.projectlombok:lombok:$lombokVersion"
+    testCompileOnly         "org.projectlombok:lombok:$lombokVersion"
+    compileOnly             "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor     "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     compile "net.engio:mbassador:$mbassadorVersion"
     compile "org.reactfx:reactfx:2.0-M5"
@@ -96,7 +95,7 @@ license {
 }
 
 jacoco {
-    toolVersion = '0.7.9'
+    toolVersion = '0.8.0'
 }
 
 idea {

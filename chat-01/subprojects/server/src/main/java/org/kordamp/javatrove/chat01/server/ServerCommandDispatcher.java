@@ -26,5 +26,5 @@ import org.kordamp.javatrove.chat01.server.impl.NamedConnection;
  * @author Andres Almiray
  */
 public interface ServerCommandDispatcher {
-    void dispatch(Server server, NamedConnection connection, Command command);
+    void dispatch(Server server, NamedConnection connection, Command command) throws CommandExecutionException;
 }

@@ -20,12 +20,10 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = '0.7.9'
+    toolVersion = '0.8.0'
 }
 
 dependencies {
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-
     testCompile project(':client')
     testCompile project(':server')
 

@@ -24,11 +24,6 @@ mainClassName = 'org.kordamp.javatrove.chat01.client.Main'
 dependencies {
     compile project(':shared')
 
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly     "org.projectlombok:lombok:$lombokVersion"
-    apt             "org.projectlombok:lombok:$lombokVersion"
-    testApt         "org.projectlombok:lombok:$lombokVersion"
-
     compile "org.jdeferred:jdeferred-core:$jdeferredVersion"
     compile "net.engio:mbassador:$mbassadorVersion"
     compile "org.kordamp.bootstrapfx:bootstrapfx-core:$bootstrapfxVersion"

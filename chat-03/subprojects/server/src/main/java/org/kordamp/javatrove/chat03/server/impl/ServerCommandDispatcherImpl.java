@@ -23,6 +23,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import org.kordamp.javatrove.chat03.Command;
+import org.kordamp.javatrove.chat03.server.CommandExecutionException;
 import org.kordamp.javatrove.chat03.server.ServerCommandDispatcher;
 import org.kordamp.javatrove.chat03.server.ServerCommandHandler;
 import org.zeromq.ZMQ;
@@ -51,9 +52,15 @@ public class ServerCommandDispatcherImpl implements ServerCommandDispatcher {
     }
 
     @Override
-    public void dispatch(ZMQ.Socket publisher, Command command) {
-        commandHandlers.stream()
-            .filter(handler -> handler.supports(command.getType()))
-            .forEach(handler -> handler.handle(publisher, command));
+    public void dispatch(ZMQ.Socket publisher, Command command) throws CommandExecutionException {
+        for (ServerCommandHandler handler : commandHandlers) {
+            if (handler.supports(command.getType())) {
+                try {
+                    handler.handle(publisher, command);
+                } catch (Exception e) {
+                    throw new CommandExecutionException(e);
+                }
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@
  */
 package org.kordamp.javatrove.chat03;
 
+import static org.kordamp.javatrove.chat03.Command.Type.ERROR;
 import static org.kordamp.javatrove.chat03.Command.Type.LOGIN;
 import static org.kordamp.javatrove.chat03.Command.Type.LOGOUT;
 import static org.kordamp.javatrove.chat03.Command.Type.MESSAGE;
@@ -47,6 +48,13 @@ public class ChatUtil {
     public static Command messageCommand(String message) {
         return Command.builder()
             .type(MESSAGE)
+            .payload(message)
+            .build();
+    }
+
+    public static Command errorCommand(String message) {
+        return Command.builder()
+            .type(ERROR)
             .payload(message)
             .build();
     }

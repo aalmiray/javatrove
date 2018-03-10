@@ -18,10 +18,12 @@
  */
 package org.kordamp.javatrove.chat03.server.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kordamp.javatrove.chat03.ChatUtil;
 import org.kordamp.javatrove.chat03.Command;
 import org.kordamp.javatrove.chat03.server.ChatServer;
+import org.kordamp.javatrove.chat03.server.CommandExecutionException;
 import org.kordamp.javatrove.chat03.server.ServerCommandDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.util.concurrent.ScheduledExecutorService;
+
+import static org.kordamp.javatrove.chat03.ChatUtil.errorCommand;
 
 /**
  * @author Andres Almiray
@@ -72,6 +76,12 @@ public class ChatServerImpl implements ChatServer {
                 Command command = objectMapper.readValue(bytes, Command.class);
                 LOG.info("received " + command);
                 serverCommandDispatcher.dispatch(publisher, command);
+            } catch (CommandExecutionException e) {
+                try {
+                    publisher.send(objectMapper.writeValueAsBytes(errorCommand(e.getMessage())));
+                } catch (JsonProcessingException je) {
+                    LOG.error("Unexpected error", je);
+                }
             } catch (IOException e) {
                 LOG.error("Unexpected error", e);
             }

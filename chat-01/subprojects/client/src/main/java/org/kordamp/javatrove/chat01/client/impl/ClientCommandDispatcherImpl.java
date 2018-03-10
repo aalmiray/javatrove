@@ -49,6 +49,7 @@ public class ClientCommandDispatcherImpl implements ClientCommandDispatcher {
             Key<ClientCommandHandler> key = binding.getKey();
             commandHandlers.add(injector.getInstance(key));
         }
+        commandHandlers.forEach(System.out::println);
     }
 
     @Override

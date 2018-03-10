@@ -22,6 +22,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 import static org.kordamp.javatrove.chat01.Command.Type.DISCONNECT;
+import static org.kordamp.javatrove.chat01.Command.Type.ERROR;
 import static org.kordamp.javatrove.chat01.Command.Type.LOGIN;
 import static org.kordamp.javatrove.chat01.Command.Type.LOGOUT;
 import static org.kordamp.javatrove.chat01.Command.Type.MESSAGE;
@@ -64,6 +65,13 @@ public class ChatUtil {
     public static Command disconnectCommand() {
         return Command.builder()
             .type(DISCONNECT)
+            .build();
+    }
+
+    public static Command errorCommand(String message) {
+        return Command.builder()
+            .type(ERROR)
+            .payload(message)
             .build();
     }
 }

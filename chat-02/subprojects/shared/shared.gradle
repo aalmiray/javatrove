@@ -30,11 +30,6 @@ buildscript {
 apply plugin: 'com.google.protobuf'
 
 dependencies {
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly     "org.projectlombok:lombok:$lombokVersion"
-    apt             "org.projectlombok:lombok:$lombokVersion"
-    testApt         "org.projectlombok:lombok:$lombokVersion"
-
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"

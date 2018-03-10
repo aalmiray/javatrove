@@ -18,7 +18,6 @@
  */
 
 plugins {
-    id 'net.ltgt.apt'                  version '0.13'   apply false
     id 'com.github.ben-manes.versions' version '0.17.0' apply false
     id 'com.github.hierynomus.license' version '0.14.0' apply false
     id 'org.kordamp.gradle.stats'      version '0.2.2'  apply false
@@ -48,7 +47,6 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'net.ltgt.apt'
     apply plugin: 'com.github.hierynomus.license'
     apply plugin: 'org.kordamp.gradle.stats'
 
@@ -63,6 +61,13 @@ subprojects {
         ext.year    = '2016-2018'
         ext.author  = 'Andres Almiray'
         ext.project = 'Java Trove Examples'
+    }
+
+    dependencies {
+        testCompileOnly         "org.projectlombok:lombok:$lombokVersion"
+        compileOnly             "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor     "org.projectlombok:lombok:$lombokVersion"
+        testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
     }
 }
 

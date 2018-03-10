@@ -18,11 +18,6 @@
  */
 
 dependencies {
-    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
-    compileOnly     "org.projectlombok:lombok:$lombokVersion"
-    apt             "org.projectlombok:lombok:$lombokVersion"
-    testApt         "org.projectlombok:lombok:$lombokVersion"
-
     compile "com.esotericsoftware:kryonet:$kryonetVersion"
     compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile "com.google.guava:guava:$guavaVersion"

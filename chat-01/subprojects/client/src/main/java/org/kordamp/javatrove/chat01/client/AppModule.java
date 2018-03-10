@@ -24,6 +24,7 @@ import org.kordamp.javatrove.chat01.client.controller.AppController;
 import org.kordamp.javatrove.chat01.client.impl.ChatClientImpl;
 import org.kordamp.javatrove.chat01.client.impl.ClientCommandDispatcherImpl;
 import org.kordamp.javatrove.chat01.client.impl.ClientDisconnectCommandHandler;
+import org.kordamp.javatrove.chat01.client.impl.ClientErrorCommandHandler;
 import org.kordamp.javatrove.chat01.client.impl.ClientKryoListener;
 import org.kordamp.javatrove.chat01.client.impl.ClientKryoListenerImpl;
 import org.kordamp.javatrove.chat01.client.impl.ClientLoginCommandHandler;
@@ -62,6 +63,7 @@ public class AppModule extends ExtAnnotationsModule {
         bindLoginCommandHandler();
         bindLogoutCommandHandler();
         bindMessageCommandHandler();
+        bindErrorCommandHandler();
         bindDisconnectCommandHandler();
         bindDeferredManager();
         bindApplicationEventBus();
@@ -116,6 +118,13 @@ public class AppModule extends ExtAnnotationsModule {
         bind(ClientCommandHandler.class)
             .annotatedWith(named(ClientMessageCommandHandler.NAME))
             .to(ClientMessageCommandHandler.class)
+            .in(Singleton.class);
+    }
+
+    protected void bindErrorCommandHandler() {
+        bind(ClientCommandHandler.class)
+            .annotatedWith(named(ClientErrorCommandHandler.NAME))
+            .to(ClientErrorCommandHandler.class)
             .in(Singleton.class);
     }
 

@@ -22,7 +22,7 @@ plugins {
     id 'idea'
     id 'jetty'
     id 'jacoco'
-    id 'net.ltgt.apt'                  version '0.13'
+    id 'net.ltgt.apt'                  version '0.15'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'com.github.hierynomus.license' version '0.14.0'
     id 'org.kordamp.gradle.stats'      version '0.2.2'
@@ -47,8 +47,8 @@ dependencyUpdates.resolutionStrategy = {
 }
 
 dependencies {
-    compileOnly "org.projectlombok:lombok:$lombokVersion"
-    apt         "org.projectlombok:lombok:$lombokVersion"
+    compileOnly         "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     compileOnly "javax:javaee-api:$javaeeapiVersion"
     compile "com.github.spullara.mustache.java:compiler:$mustacheVersion"

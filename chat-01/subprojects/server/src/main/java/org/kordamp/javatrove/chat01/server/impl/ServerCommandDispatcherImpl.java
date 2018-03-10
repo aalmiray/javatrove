@@ -24,6 +24,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import org.kordamp.javatrove.chat01.Command;
+import org.kordamp.javatrove.chat01.server.CommandExecutionException;
 import org.kordamp.javatrove.chat01.server.ServerCommandDispatcher;
 import org.kordamp.javatrove.chat01.server.ServerCommandHandler;
 
@@ -37,8 +38,7 @@ import java.util.Set;
  * @author Andres Almiray
  */
 public class ServerCommandDispatcherImpl implements ServerCommandDispatcher {
-    @Inject
-    private Injector injector;
+    @Inject private Injector injector;
 
     private final Set<ServerCommandHandler> commandHandlers = new LinkedHashSet<>();
 
@@ -52,9 +52,15 @@ public class ServerCommandDispatcherImpl implements ServerCommandDispatcher {
     }
 
     @Override
-    public void dispatch(Server server, NamedConnection connection, Command command) {
-        commandHandlers.stream()
-            .filter(handler -> handler.supports(command.getType()))
-            .forEach(handler -> handler.handle(server, connection, command));
+    public void dispatch(Server server, NamedConnection connection, Command command) throws CommandExecutionException {
+        for (ServerCommandHandler handler : commandHandlers) {
+            if (handler.supports(command.getType())) {
+                try {
+                    handler.handle(server, connection, command);
+                } catch (Exception e) {
+                    throw new CommandExecutionException(e);
+                }
+            }
+        }
     }
 }

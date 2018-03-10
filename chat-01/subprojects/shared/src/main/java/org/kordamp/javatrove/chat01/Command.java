@@ -30,7 +30,8 @@ public class Command {
         LOGIN,
         LOGOUT,
         MESSAGE,
-        DISCONNECT;
+        DISCONNECT,
+        ERROR
     }
 
     private Type type;

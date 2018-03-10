@@ -20,23 +20,28 @@ package org.kordamp.javatrove.chat01.server.impl;
 
 import com.esotericsoftware.kryonet.Connection;
 import org.kordamp.javatrove.chat01.Command;
+import org.kordamp.javatrove.chat01.server.CommandExecutionException;
 import org.kordamp.javatrove.chat01.server.ServerCommandDispatcher;
 
 import javax.inject.Inject;
 
+import static org.kordamp.javatrove.chat01.ChatUtil.errorCommand;
 import static org.kordamp.javatrove.chat01.ChatUtil.logoutCommand;
 
 /**
  * @author Andres Almiray
  */
 public class ServerKryoListenerImpl extends ServerKryoListener {
-    @Inject
-    private ServerCommandDispatcher serverCommandDispatcher;
+    @Inject private ServerCommandDispatcher serverCommandDispatcher;
 
     @Override
     public void disconnected(Connection connection) {
         NamedConnection namedConnection = (NamedConnection) connection;
-        serverCommandDispatcher.dispatch(server, namedConnection, logoutCommand(namedConnection.getName()));
+        try {
+            serverCommandDispatcher.dispatch(server, namedConnection, logoutCommand(namedConnection.getName()));
+        } catch (CommandExecutionException ignored) {
+            // ignored
+        }
     }
 
     @Override
@@ -44,6 +49,10 @@ public class ServerKryoListenerImpl extends ServerKryoListener {
         if (!(object instanceof Command)) {
             return;
         }
-        serverCommandDispatcher.dispatch(server, (NamedConnection) connection, (Command) object);
+        try {
+            serverCommandDispatcher.dispatch(server, (NamedConnection) connection, (Command) object);
+        } catch (CommandExecutionException e) {
+            server.sendToTCP(connection.getID(), errorCommand(e.getMessage()));
+        }
     }
 }
