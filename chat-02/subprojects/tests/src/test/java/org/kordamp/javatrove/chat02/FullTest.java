@@ -71,7 +71,7 @@ public class FullTest {
         testfx.clickOn("#loginButton");
 
         // then:
-        pause(500);
+        pause(1000);
         testfx.waitUntil(testfx.window("Error"), isShowing(), 5);
         testfx.clickOn("OK");
     }
