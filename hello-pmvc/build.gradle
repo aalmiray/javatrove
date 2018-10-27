@@ -29,7 +29,7 @@ plugins {
 
 repositories {
     jcenter()
-    maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencyUpdates.resolutionStrategy = {
@@ -71,7 +71,7 @@ dependencies {
     testCompile "com.google.truth:truth:$truthVersion"
     testCompile "org.jgotesting:jgotesting:$jgotestingVersion"
     testCompile "org.codehaus.groovy:groovy-all:$groovyVersion"
-    testCompile("org.spockframework.spock:spock-guice:$spockVersion") {
+    testCompile("org.spockframework:spock-guice:$spockVersion") {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
     testCompile('com.athaydes:spock-reports:1.6.1') {
