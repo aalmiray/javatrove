@@ -77,7 +77,7 @@ dependencies {
     testCompile('com.athaydes:spock-reports:1.6.1') {
         transitive = false
     }
-    testCompile "com.tngtech.jgiven:jgiven-junit:$jgivenVersion"
+    // testCompile "com.tngtech.jgiven:jgiven-junit:$jgivenVersion"
     testCompile "org.jbehave:jbehave-core:$jbehaveVersion"
 }
 
@@ -123,6 +123,7 @@ idea {
     }
 }
 
+/*
 test {
     systemProperty 'jgiven.report.dir', 'build/reports/jgiven/json'
     systemProperty 'jgiven.report.text', 'false'
@@ -140,3 +141,4 @@ task jgivenHtml5Report(type: JavaExec) {
     classpath = configurations.testCompile
 }
 test.finalizedBy(jgivenHtml5Report)
+*/
