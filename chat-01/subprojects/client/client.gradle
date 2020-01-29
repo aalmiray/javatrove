@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Andres Almiray
+ * Copyright 2016-2020 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -17,32 +17,44 @@
  * along with Java Trove Examples. If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'application'
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin'
+}
 
 mainClassName = 'org.kordamp.javatrove.chat01.client.Main'
 
-dependencies {
-    compile project(':shared')
+javafx {
+    version = javafxVersion
+    modules = [
+        'javafx.controls',
+        'javafx.fxml',
+        'javafx.graphics'
+    ]
+}
 
-    compile "org.jdeferred:jdeferred-core:$jdeferredVersion"
-    compile "net.engio:mbassador:$mbassadorVersion"
-    compile "org.kordamp.bootstrapfx:bootstrapfx-core:$bootstrapfxVersion"
-    compile "org.kordamp.ikonli:ikonli-javafx:$ikonliVersion"
-    compile "org.kordamp.ikonli:ikonli-fontawesome-pack:$ikonliVersion"
-    compile "org.kordamp.ikonli:ikonli-fontelico-pack:$ikonliVersion"
-    compile "com.miglayout:miglayout-javafx:$miglayoutVersion"
-    compile "org.fxmisc.easybind:easybind:$easybindVersion"
-    compile("org.fxmisc.richtext:richtextfx:$richtextfxVersion") {
+dependencies {
+    api project(':shared')
+
+    api "org.jdeferred:jdeferred-core:$jdeferredVersion"
+    api "net.engio:mbassador:$mbassadorVersion"
+    api "org.kordamp.bootstrapfx:bootstrapfx-core:$bootstrapfxVersion"
+    api "org.kordamp.ikonli:ikonli-javafx:$ikonliVersion"
+    api "org.kordamp.ikonli:ikonli-fontawesome-pack:$ikonliVersion"
+    api "org.kordamp.ikonli:ikonli-fontelico-pack:$ikonliVersion"
+    api "com.miglayout:miglayout-javafx:$miglayoutVersion"
+    api "org.fxmisc.easybind:easybind:$easybindVersion"
+    api("org.fxmisc.richtext:richtextfx:$richtextfxVersion") {
         exclude group: 'org.reactfx', module: 'reactfx'
     }
-    compile "org.fxmisc.flowless:flowless:$flowlessVersion"
-    compile "org.reactfx:reactfx:$reactfxVersion"
+    api "org.fxmisc.flowless:flowless:$flowlessVersion"
+    api "org.reactfx:reactfx:$reactfxVersion"
 
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.mockito:mockito-core:$mockitoVersion"
-    testCompile "org.jukito:jukito:$jukitoVersion"
-    testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
-    testCompile "org.awaitility:awaitility:$awaitilityVersion"
-    testCompile "org.testfx:testfx-core:$testfxVersion"
-    testCompile "org.testfx:testfx-junit:$testfxVersion"
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.jukito:jukito:$jukitoVersion"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrestVersion"
+    testImplementation "org.awaitility:awaitility:$awaitilityVersion"
+    testImplementation "org.testfx:testfx-core:$testfxVersion"
+    testImplementation "org.testfx:testfx-junit:$testfxVersion"
 }

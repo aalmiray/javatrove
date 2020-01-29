@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Andres Almiray
+ * Copyright 2016-2020 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -116,7 +116,7 @@ public class AppView {
         progress.visibleProperty().bind(running);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().addAll(basename + ".css", "bootstrapfx.css");
+        scene.getStylesheets().addAll(basename + ".css", "org/kordamp/bootstrapfx/bootstrapfx.css");
         return scene;
     }
 
@@ -160,6 +160,11 @@ public class AppView {
         @Override
         public int size() {
             return getSource().size();
+        }
+
+        @Override
+        public int getViewIndex(int index) {
+            return index;
         }
     }
 }

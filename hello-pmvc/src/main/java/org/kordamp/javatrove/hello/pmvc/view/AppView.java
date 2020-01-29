@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Andres Almiray
+ * Copyright 2016-2020 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -60,7 +60,7 @@ public class AppView {
         model.outputProperty().addListener((v, o, n) -> Platform.runLater(() -> output.setText(n)));
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().addAll(basename + ".css", "org/kordamp/bootstrapfx/bootstrapfx.css");
+        scene.getStylesheets().addAll(basename + ".css", "org/kordamp/bootstrapfx/org/kordamp/bootstrapfx/bootstrapfx.css");
         return scene;
     }
 

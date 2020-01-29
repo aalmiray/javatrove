@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Andres Almiray
+ * Copyright 2016-2020 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -20,21 +20,21 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = '0.8.0'
+    toolVersion = '0.8.5'
 }
 
 dependencies {
-    testCompile project(':client')
-    testCompile project(':server')
+    testImplementation project(':client')
+    testImplementation project(':server')
 
-    testCompile 'org.kordamp.testfx:testfx-dsl:0.1.0'
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.mockito:mockito-core:$mockitoVersion"
-    testCompile "org.jukito:jukito:$jukitoVersion"
-    testCompile "org.hamcrest:hamcrest-library:$hamcrestVersion"
-    testCompile "org.awaitility:awaitility:$awaitilityVersion"
-    testCompile "org.testfx:testfx-core:$testfxVersion"
-    testCompile "org.testfx:testfx-junit:$testfxVersion"
+    testImplementation 'org.kordamp.testfx:testfx-dsl:0.1.0'
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.jukito:jukito:$jukitoVersion"
+    testImplementation "org.hamcrest:hamcrest-library:$hamcrestVersion"
+    testImplementation "org.awaitility:awaitility:$awaitilityVersion"
+    testImplementation "org.testfx:testfx-core:$testfxVersion"
+    testImplementation "org.testfx:testfx-junit:$testfxVersion"
 }
 
 ext.dependentProjects = [':shared', ':client', ':server']
@@ -46,15 +46,15 @@ jacocoTestReport {
     description = 'Generate Jacoco coverage reports after running tests.'
 
     List _classDirectories = [project(':tests').sourceSets.main.output.classesDirs.asPath]
-    Set _sourceDirectories = [project(':tests').sourceSets.main.allSource.srcDirs] as Set
+    Set _sourceDirectories =[project(':tests').sourceSets.main.allSource.srcDirs] as Set
     project.dependentProjects.each { String projectName ->
         _classDirectories << project(projectName).sourceSets.main.output.classesDirs.asPath
         _sourceDirectories << project(projectName).sourceSets.main.allSource.srcDirs
     }
 
-    additionalSourceDirs = project.files(_sourceDirectories)
-    sourceDirectories = project.files(_sourceDirectories)
-    classDirectories = project.files(_classDirectories)
+    additionalSourceDirs.from project.files(_sourceDirectories)
+    sourceDirectories.from project.files(_sourceDirectories)
+    classDirectories.from project.files(_classDirectories)
 
     reports {
         xml.enabled = true

@@ -52,7 +52,7 @@ All code found in this repository is licensed under GPL v3
 
 [source]
 ----
-Copyright 2016-2018 Andres Almiray
+Copyright 2016-2020 Andres Almiray
 
 This file is part of Java Trove Examples
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Andres Almiray
+ * Copyright 2016-2020 Andres Almiray
  *
  * This file is part of Java Trove Examples
  *
@@ -43,7 +43,7 @@ public abstract class AbstractRoute implements Route {
         if (shouldReturnHtml(req)) {
             resp.setContentType("text/html");
             MustacheFactory mf = new DefaultMustacheFactory("templates");
-            Mustache mustache = mf.compile(modelAndView.getViewName());
+            Mustache mustache = mf.api(modelAndView.getViewName());
             mustache.execute(resp.getWriter(), modelAndView.getModel()).flush();
         } else {
             resp.setContentType("application/json");
