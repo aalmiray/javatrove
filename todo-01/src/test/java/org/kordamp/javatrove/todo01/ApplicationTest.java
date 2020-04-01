@@ -54,7 +54,7 @@ public class ApplicationTest {
 
     @Test
     public void _01_initial_data_is_loaded() {
-        given().port(4567).
+        given().port(8080).
         when().
             get("/todos").
         then().
@@ -63,7 +63,7 @@ public class ApplicationTest {
 
     @Test
     public void _02_create_a_todo_item() {
-        given().port(4567).
+        given().port(8080).
             queryParam("description","test").
         when().
             post("/todos").

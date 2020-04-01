@@ -34,6 +34,7 @@ public class Application {
 
     @PostConstruct
     private void init() {
+        Spark.port(8080);
         dataSourceBootstrap.init();
     }
 
